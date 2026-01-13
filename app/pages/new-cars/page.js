@@ -16,19 +16,49 @@ export default function NewCars() {
     try {
       const response = await fetch("/mock_cars.json"); // Load JSON from public folder
       const data = await response.json();
-      console.log("Cars data loaded:", data); // Debugging log
-
+  
       setTotalCars(data.length); // Set the total number of cars
-      setCars(data.slice(0, 10)); // Display the first 10 cars initially
-      replaceImages(data.slice(0, 10), 1); // Fetch images for the first page
+      const initialCars = data.slice(0, 10); // Get the first 10 cars
+      const carsWithImages = await fetchInitialImages(initialCars); // Fetch images for the first 10 cars
+      setCars(carsWithImages); // Display the first 10 cars with images
       setShowGallery(true); // Show the gallery
     } catch (error) {
       console.error("Error loading cars:", error);
     }
   };
 
+  const fetchInitialImages = async (data) => {
+    
+    try {
+      const unsplashResponse = await fetch(
+        `https://api.unsplash.com/search/photos?query=cars&per_page=10&page=1`,
+        {
+          headers: {
+            Authorization: `Client-ID ${process.env.NEXT_PUBLIC_UNSPLASH_KEY}`,
+          },
+        }
+      );
+      const unsplashData = await unsplashResponse.json();
+  
+      // Map over the initial cars and add images from Unsplash
+      return data.map((car, index) => {
+        if (unsplashData.results[index]) {
+          return {
+            ...car, // Keep existing car properties
+            image: unsplashData.results[index].urls.small, // Add Unsplash image
+          };
+        }
+        return car;
+      });
+    } catch (error) {
+      console.error("Error fetching initial images from Unsplash:", error);
+      return data; // Return the original data if there is an error
+    }
+  };
+
   // Function to fetch Unsplash images and replace car images
   const replaceImages = async (data, page) => {
+
     try {
       setIsLoading(true); // Set loading state
       const unsplashResponse = await fetch(
@@ -40,26 +70,23 @@ export default function NewCars() {
         }
       );
       const unsplashData = await unsplashResponse.json();
-      console.log("Unsplash API response:", unsplashData);
 
       if (unsplashData.results.length === 0) {
         setHasMore(false); // No more images available
         return;
       }
 
-      // Map over the new cars and add images from Unsplash
       const newCars = data.map((car, index) => {
         if (unsplashData.results[index]) {
           return {
-            ...car, // Keep existing car properties
+            ...car,
             image: unsplashData.results[index].urls.small, // Add Unsplash image
           };
         }
         return car;
       });
 
-      // Append the new cars to the existing cars without modifying the old ones
-      setCars((prevCars) => [...prevCars, ...newCars]);
+      setCars((prevCars) => [...prevCars, ...newCars]); // Append new cars
     } catch (error) {
       console.error("Error fetching from Unsplash:", error);
     } finally {
@@ -69,6 +96,7 @@ export default function NewCars() {
 
   // Function to load more cars when scrolling
   const loadMoreCars = useCallback(() => {
+    
     if (!isLoading && hasMore) {
       setPage((prevPage) => prevPage + 1); // Increment the page number
     }
@@ -76,25 +104,49 @@ export default function NewCars() {
 
   // Use Effect to fetch more cars when the page changes
   useEffect(() => {
+
     if (page > 1) {
-      const startIndex = (page - 1) * 10;
-      const endIndex = page * 10;
-      replaceImages(cars.slice(startIndex, endIndex), page); // Fetch the next page of images
+      const fetchNextBatch = async () => {
+        try {
+          const response = await fetch("/mock_cars.json"); // Load JSON from public folder
+          const data = await response.json();
+
+          const startIndex = (page - 1) * 10;
+          const endIndex = page * 10;
+          const nextBatch = data.slice(startIndex, endIndex); // Get the next batch of cars
+
+          if (nextBatch.length === 0) {
+            setHasMore(false); // No more cars to load
+            return;
+          }
+
+          replaceImages(nextBatch, page); // Fetch images for the next batch of cars
+        } catch (error) {
+          console.error("Error fetching cars for page:", page, error);
+        }
+      };
+
+      fetchNextBatch();
     }
   }, [page]);
 
   // Use IntersectionObserver to detect when the user scrolls to the bottom
   useEffect(() => {
+    if (!showGallery) return; // Only initialize the observer when the gallery is open
+
     const observer = new IntersectionObserver(
       (entries) => {
-        if (entries[0].isIntersecting) {
-          loadMoreCars(); // Load more cars when the bottom is visible
-        }
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            loadMoreCars(); // Load more cars when the bottom is visible
+          }
+        });
       },
-      { threshold: 1.0 }
+      { threshold: 0.5 } // Adjust threshold for better triggering
     );
 
     const sentinel = document.querySelector("#scroll-sentinel");
+
     if (sentinel) {
       observer.observe(sentinel);
     }
@@ -104,7 +156,7 @@ export default function NewCars() {
         observer.unobserve(sentinel);
       }
     };
-  }, [loadMoreCars]);
+  }, [showGallery, loadMoreCars]);
 
   // Function to handle clicking on a car card
   const handleCardClick = (car) => {
