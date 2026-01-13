@@ -4,23 +4,38 @@ import styles from "./Navbar.module.css";
 
 export default function Navbar() {
   return (
-    <nav className={`flex justify-between items-center p-4 border-b border-b-zinc-500 bg-transparent ${styles.navbar}`}>
+    <nav className={`flex justify-between items-center p-4 border-b border-green-700 bg-green-800 text-white ${styles.navbar}`}>
+      {/* Logo */}
       <div className="flex items-center">
         <Image
           src="/logo.png"
           alt="CarTrader Logo"
-          width={240} 
-          height={50} 
+          width={240}
+          height={50}
           className={styles.logo}
         />
       </div>
-      <div className={`space-x-4 ${styles.navLinks}`}>
-        <Link href="/">Home</Link>
-        <Link href="../pages/new-cars">New Cars</Link>
-        <Link href="../pages/used-cars">Used Cars</Link>
-        <Link href="../pages/sell-car">Sell Car</Link>
+
+      {/* Navigation Links */}
+      <div className={`space-x-6 ${styles.navLinks}`}>
+        <Link href="/" className="hover:text-green-300 transition-all">
+          Home
+        </Link>
+        <Link href="../pages/new-cars" className="hover:text-green-300 transition-all">
+          New Cars
+        </Link>
+        <Link href="../pages/used-cars" className="hover:text-green-300 transition-all">
+          Used Cars
+        </Link>
+        <Link href="../pages/sell-car" className="hover:text-green-300 transition-all">
+          Sell Car
+        </Link>
       </div>
-      <button className={styles.signInButton}>Sign In</button>
+
+      {/* Sign In Button */}
+      <button className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded transition-all">
+        Sign In
+      </button>
     </nav>
   );
 }
