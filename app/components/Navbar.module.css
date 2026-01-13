@@ -1,0 +1,27 @@
+.navbar {
+    background-color: var(--foreground-secondary) !important;
+}
+
+.signInButton {
+    padding: 8px 15px;
+    font-size: 1rem;
+    color: #fff;
+    background-color: rgba(240, 165, 0, 0.8); /* Highlight color */
+    border: none;
+    border-radius: 8px; /* Rounded corners */
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.signInButton:hover {
+    background-color: rgba(240, 165, 0, 1); /* Darker highlight on hover */
+    transform: scale(1.05); /* Slight zoom effect */
+}
+
+.logo {
+    height: 50px;
+}
+
+.navLinks a {
+    color: #fff;
+}
