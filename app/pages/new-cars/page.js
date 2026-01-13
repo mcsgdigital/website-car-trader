@@ -10,17 +10,31 @@ export default function NewCars() {
   const [isLoading, setIsLoading] = useState(false); // State to track loading status
   const [hasMore, setHasMore] = useState(true); // State to track if more cars are available
 
+  const calculateCardsToDisplay = () => {
+    const galleryWidth = window.innerWidth; // Width of the screen
+    const galleryHeight = window.innerHeight * 0.8; // 80% of the viewport height
+    const cardWidth = 300; // Approximate width of each card (including margins)
+    const cardHeight = 400; // Approximate height of each card (including margins)
+
+    const cardsPerRow = Math.floor(galleryWidth / cardWidth); // Number of cards per row
+    const rows = Math.floor(galleryHeight / cardHeight); // Number of rows that fit in the gallery
+
+    return cardsPerRow * rows; // Total number of cards to display
+  };
+
   // Function to handle the "Search" button click
   const handleSearch = async (e) => {
     e.preventDefault(); // Prevent form submission
     try {
       const response = await fetch("/mock_cars.json"); // Load JSON from public folder
       const data = await response.json();
-  
+
       setTotalCars(data.length); // Set the total number of cars
-      const initialCars = data.slice(0, 10); // Get the first 10 cars
-      const carsWithImages = await fetchInitialImages(initialCars); // Fetch images for the first 10 cars
-      setCars(carsWithImages); // Display the first 10 cars with images
+
+      const cardsToDisplay = calculateCardsToDisplay(); // Calculate the number of cards to display
+      const initialCars = data.slice(0, cardsToDisplay); // Get the required number of cars
+      const carsWithImages = await fetchInitialImages(initialCars); // Fetch images for the cars
+      setCars(carsWithImages); // Display the cars with images
       setShowGallery(true); // Show the gallery
     } catch (error) {
       console.error("Error loading cars:", error);
@@ -58,6 +72,7 @@ export default function NewCars() {
 
   // Function to fetch Unsplash images and replace car images
   const replaceImages = async (data, page) => {
+    console.log(`Fetching images for page ${page} from Unsplash for data:`, data);
 
     try {
       setIsLoading(true); // Set loading state
@@ -70,6 +85,7 @@ export default function NewCars() {
         }
       );
       const unsplashData = await unsplashResponse.json();
+      console.log("Unsplash API response:", unsplashData);
 
       if (unsplashData.results.length === 0) {
         setHasMore(false); // No more images available
@@ -104,6 +120,7 @@ export default function NewCars() {
 
   // Use Effect to fetch more cars when the page changes
   useEffect(() => {
+    console.log("Page changed to:", page); // Debugging log
 
     if (page > 1) {
       const fetchNextBatch = async () => {
@@ -111,8 +128,9 @@ export default function NewCars() {
           const response = await fetch("/mock_cars.json"); // Load JSON from public folder
           const data = await response.json();
 
-          const startIndex = (page - 1) * 10;
-          const endIndex = page * 10;
+          const cardsToDisplay = calculateCardsToDisplay(); // Calculate the number of cards to display
+          const startIndex = (page - 1) * cardsToDisplay;
+          const endIndex = page * cardsToDisplay;
           const nextBatch = data.slice(startIndex, endIndex); // Get the next batch of cars
 
           if (nextBatch.length === 0) {
