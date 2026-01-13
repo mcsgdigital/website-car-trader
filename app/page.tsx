@@ -23,7 +23,7 @@ export default function Home() {
                             />
                             <button
                                 type="submit"
-                                className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600"
+                                className="w-full bg-green-500 text-white py-2 rounded hover:bg-green-600"
                             >
                                 Search
                             </button>
@@ -40,7 +40,7 @@ export default function Home() {
                             <p className="text-sm font-normal text-zinc-300">
                                 Largest selection of vehicles
                             </p>
-                            <button className="mt-4 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
+                            <button className="mt-4 bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600">
                                 Browse
                             </button>
                         </div>
@@ -81,7 +81,7 @@ export default function Home() {
                                 Get the best maintenance and repair services for
                                 your car.
                             </p>
-                            <button className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
+                            <button className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600">
                                 Learn More
                             </button>
                         </div>
@@ -102,7 +102,7 @@ export default function Home() {
                                 Flexible financing options to help you own your
                                 dream car.
                             </p>
-                            <button className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
+                            <button className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600">
                                 Learn More
                             </button>
                         </div>
@@ -123,7 +123,7 @@ export default function Home() {
                                 Trade in your old car and get the best value for
                                 it.
                             </p>
-                            <button className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
+                            <button className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600">
                                 Learn More
                             </button>
                         </div>
