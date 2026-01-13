@@ -9,6 +9,8 @@ export default function NewCars() {
   const [page, setPage] = useState(1); // State to track the current page
   const [isLoading, setIsLoading] = useState(false); // State to track loading status
   const [hasMore, setHasMore] = useState(true); // State to track if more cars are available
+  const [activeFilter, setActiveFilter] = useState(null); // State to track the active filter
+  const [expandedCategory, setExpandedCategory] = useState(null); // State to track the expanded category
 
   const calculateCardsToDisplay = () => {
     const galleryWidth = window.innerWidth; // Width of the screen
@@ -72,7 +74,6 @@ export default function NewCars() {
 
   // Function to fetch Unsplash images and replace car images
   const replaceImages = async (data, page) => {
-    console.log(`Fetching images for page ${page} from Unsplash for data:`, data);
 
     try {
       setIsLoading(true); // Set loading state
@@ -85,7 +86,6 @@ export default function NewCars() {
         }
       );
       const unsplashData = await unsplashResponse.json();
-      console.log("Unsplash API response:", unsplashData);
 
       if (unsplashData.results.length === 0) {
         setHasMore(false); // No more images available
@@ -120,7 +120,6 @@ export default function NewCars() {
 
   // Use Effect to fetch more cars when the page changes
   useEffect(() => {
-    console.log("Page changed to:", page); // Debugging log
 
     if (page > 1) {
       const fetchNextBatch = async () => {
@@ -176,6 +175,12 @@ export default function NewCars() {
     };
   }, [showGallery, loadMoreCars]);
 
+  useEffect(() => {
+    if (activeFilter) {
+      setExpandedCategory(activeFilter); // Automatically expand the matching category
+    }
+  }, [activeFilter]);
+
   // Function to handle clicking on a car card
   const handleCardClick = (car) => {
     setSelectedCar(car); // Set the selected car
@@ -184,6 +189,10 @@ export default function NewCars() {
   // Function to close the lightbox
   const closeLightbox = () => {
     setSelectedCar(null); // Clear the selected car
+  };
+
+  const toggleCategory = (category) => {
+    setExpandedCategory((prev) => (prev === category ? null : category)); // Toggle the category
   };
 
   return (
@@ -233,57 +242,86 @@ export default function NewCars() {
         </>
       ) : (
         // If showGallery is true, display the Gallery
-        <div
-          className="p-8 h-[80vh] overflow-y-auto" // Make the gallery scrollable
-          id="scrollable-gallery"
-        >
-          <h1 className="text-3xl font-bold mb-8">Available Cars</h1>
-          {/* Number of Results */}
-          <p className="text-gray-600 mb-8">
-            See {cars.length} of {totalCars} {totalCars === 1 ? "result" : "results"} found
-          </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6">
-            {cars.map((car, index) => (
-              <div
-                key={index}
-                className="bg-white shadow-lg rounded-lg overflow-hidden flex flex-col max-w-[300px] w-full mx-auto cursor-pointer"
-                onClick={() => handleCardClick(car)}
+        <>
+          {/* Filter Bar */}
+          <div className="sticky top-0 bg-green-500 text-white z-10 shadow-md px-6 py-3 rounded-full mx-auto w-fit flex gap-4 items-center">
+            {/* Prominent FILTER Button */}
+            <button
+              className="bg-green-800 hover:bg-green-700 text-white px-6 py-3 rounded-full font-bold shadow-lg transition-all cursor-pointer"
+              onClick={() => setActiveFilter("Filter")} // Open the filter window
+            >
+              FILTER
+            </button>
+            {/* Other Filter Buttons */}
+            {["Make", "Price", "Mileage", "Gearbox", "Body Type"].map((filter) => (
+              <button
+                key={filter}
+                className="bg-green-700 hover:bg-green-600 text-white px-4 py-2 rounded-full transition-all cursor-pointer"
+                onClick={() => setActiveFilter(filter)} // Open the lightbox for the selected filter
               >
-                {/* Car Image */}
-                <img
-                  src={car.image}
-                  alt={`${car.make} ${car.model}`}
-                  className="w-full h-48 object-cover"
-                  loading="lazy" // Enable lazy loading
-                />
-                <div className="p-4 flex flex-col justify-between flex-1">
-                  {/* Car Details */}
-                  <div>
-                    <h2 className="text-xl font-bold mb-2">
-                      {car.make} {car.model}
-                    </h2>
-                    <p className="text-gray-600">{car.instock && "IN STOCK"}</p>
-                  </div>
-
-                  {/* Bottom Section */}
-                  <div className="mt-auto">
-                    <p className="text-gray-400">
-                      Save £{car.saving}{" "}
-                      <span className="text-red-600 text-sm">
-                        £{car.price + car.saving}
-                      </span>
-                    </p>
-                    <p className="text-black-600">£{car.price}</p>
-                    <p className="text-gray-600">Distance: {car.distance} miles</p>
-                  </div>
-                </div>
-              </div>
+                {filter}
+              </button>
             ))}
           </div>
-          {/* Scroll Sentinel */}
-          <div id="scroll-sentinel" className="h-4"></div> {/* Scroll sentinel */}
-          {isLoading && <p>Loading more images...</p>}
-        </div>
+
+          {/* Scrollable Gallery */}
+          <div
+            className="p-8 h-[80vh] overflow-y-auto -mt-8" // Add negative margin to overlap the filter bar
+            id="scrollable-gallery"
+          >
+            {/* Title */}
+            <h1 className="text-3xl font-bold mb-8 mt-6">Available Cars</h1>
+
+            {/* Number of Results */}
+            <p className="text-gray-600 mb-8">
+              See {cars.length} of {totalCars} {totalCars === 1 ? "result" : "results"} found
+            </p>
+
+            {/* Car Cards */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6">
+              {cars.map((car, index) => (
+                <div
+                  key={index}
+                  className="bg-white shadow-lg rounded-lg overflow-hidden flex flex-col max-w-[300px] w-full mx-auto cursor-pointer"
+                  onClick={() => handleCardClick(car)}
+                >
+                  {/* Car Image */}
+                  <img
+                    src={car.image}
+                    alt={`${car.make} ${car.model}`}
+                    className="w-full h-48 object-cover"
+                    loading="lazy" // Enable lazy loading
+                  />
+                  <div className="p-4 flex flex-col justify-between flex-1">
+                    {/* Car Details */}
+                    <div>
+                      <h2 className="text-xl font-bold mb-2">
+                        {car.make} {car.model}
+                      </h2>
+                      <p className="text-gray-600">{car.instock && "IN STOCK"}</p>
+                    </div>
+
+                    {/* Bottom Section */}
+                    <div className="mt-auto">
+                      <p className="text-gray-400">
+                        Save £{car.saving}{" "}
+                        <span className="text-red-600 text-sm">
+                          £{car.price + car.saving}
+                        </span>
+                      </p>
+                      <p className="text-black-600">£{car.price}</p>
+                      <p className="text-gray-600">Distance: {car.distance} miles</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Scroll Sentinel */}
+            <div id="scroll-sentinel" className="h-4"></div> {/* Scroll sentinel */}
+            {isLoading && <p>Loading more images...</p>}
+          </div>
+        </>
       )}
 
       {/* Lightbox Section */}
@@ -352,6 +390,94 @@ export default function NewCars() {
                   </button>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {activeFilter && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+          style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }} // Fallback for transparency
+        >
+          <div className="bg-white rounded-lg shadow-lg w-11/12 max-w-[600px] p-8 relative">
+            {/* Close Button */}
+            <button
+              className="absolute top-4 right-4 text-gray-500 hover:text-gray-800 cursor-pointer"
+              onClick={() => {
+                setActiveFilter(null); // Close the lightbox
+                setExpandedCategory(null); // Reset expanded category
+              }}
+            >
+              ✕
+            </button>
+
+            {/* Filter Title */}
+            <h2 className="text-2xl font-bold mb-4">Filter / Sort</h2>
+
+            {/* Collapsible Categories */}
+            <div className="space-y-6">
+              {["Price", "Mileage", "Make", "Gearbox", "Body Type"].map((category, index) => (
+                <div
+                  key={index}
+                  className={`border-b border-gray-200 pb-4 ${
+                    expandedCategory === category ? "bg-gray-100" : "" // Apply light gray background if expanded
+                  }`}
+                >
+                  {/* Category Header */}
+                  <div
+                    className={`flex justify-between items-center cursor-pointer p-2 rounded ${
+                      expandedCategory === category ? "bg-green-500 text-white" : "bg-transparent"
+                    }`} // Green background and white text for expanded category
+                    onClick={() => toggleCategory(category)} // Toggle the category
+                  >
+                    <label className="block text-lg font-medium">{category}</label>
+                    <span className="text-gray-200">
+                      {expandedCategory === category ? "▲" : "▼"} {/* Arrow indicator */}
+                    </span>
+                  </div>
+
+                  {/* Category Content */}
+                  {expandedCategory === category && (
+                    <div className="mt-4">
+                      {["Price", "Mileage"].includes(category) ? (
+                        <div className="flex items-center gap-4">
+                          <input
+                            type="number"
+                            placeholder="Min"
+                            className="w-1/2 p-2 border border-gray-300 rounded"
+                          />
+                          <input
+                            type="number"
+                            placeholder="Max"
+                            className="w-1/2 p-2 border border-gray-300 rounded"
+                          />
+                        </div>
+                      ) : (
+                        <select className="w-full p-2 border border-gray-300 rounded">
+                          <option value="">Select {category}</option>
+                          <option value="Option 1">{category} Option 1</option>
+                          <option value="Option 2">{category} Option 2</option>
+                          <option value="Option 3">{category} Option 3</option>
+                        </select>
+                      )}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+
+            {/* Search Button */}
+            <div className="flex justify-end mt-4">
+              <button
+                className="bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600"
+                onClick={() => {
+                  setActiveFilter(null); // Close the lightbox
+                  console.log("Search triggered"); // Debugging log
+                }}
+              >
+                Search
+              </button>
             </div>
           </div>
         </div>
