@@ -1,6 +1,8 @@
+import Layout from "./components/Layout";
+
 export default function Home() {
     return (
-        <>
+        <Layout>
             {/* Hero Section with Cards */}
             <section className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
                 {/* Hero Content */}
@@ -130,6 +132,6 @@ export default function Home() {
                     </div>
                 </div>
             </section>
-        </>
+        </Layout>
     );
 }

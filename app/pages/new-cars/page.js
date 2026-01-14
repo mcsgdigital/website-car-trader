@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect, useCallback } from "react";
+import Layout from "../../components/Layout";
 
 export default function NewCars() {
   const [cars, setCars] = useState([]); // State to store loaded cars
@@ -11,6 +12,7 @@ export default function NewCars() {
   const [hasMore, setHasMore] = useState(true); // State to track if more cars are available
   const [activeFilter, setActiveFilter] = useState(null); // State to track the active filter
   const [expandedCategory, setExpandedCategory] = useState(null); // State to track the expanded category
+  const [latestDeals, setLatestDeals] = useState([]); // State to store latest deals with images
 
   const calculateCardsToDisplay = () => {
     const galleryWidth = window.innerWidth; // Width of the screen
@@ -181,6 +183,47 @@ export default function NewCars() {
     }
   }, [activeFilter]);
 
+  // Function to fetch Unsplash images for Latest Deals
+  const fetchLatestDealsImages = async () => {
+    try {
+      const response = await fetch(
+        `https://api.unsplash.com/search/photos?query=cars&per_page=4&page=1`,
+        {
+          headers: {
+            Authorization: `Client-ID ${process.env.NEXT_PUBLIC_UNSPLASH_KEY}`, // Use your Unsplash API key
+          },
+        }
+      );
+      const data = await response.json();
+
+      // Map the fetched images to car details
+      const deals = data.results.map((image, index) => ({
+        id: index,
+        price: `£${[299, 249, 199, 329][index]}/month`, // Random prices
+        initialPayment: `£${[1000, 750, 500, 1250][index]} initial payment`, // Random initial payments
+        contract: `${[24, 36, 48, 36][index]} month contract`, // Random contract lengths
+        mileage: `${[5000, 8000, 10000, 12000][index]} miles p/a`, // Random mileage
+        makeModel: ["BMW 3 Series", "Audi A4", "Mercedes-Benz C-Class", "Tesla Model 3"][index], // Random car models
+        spec: [
+          "M Sport, 2.0L Diesel, Automatic",
+          "S Line, 1.5L Petrol, Manual",
+          "AMG Line, 2.0L Petrol, Automatic",
+          "Long Range, Electric, Automatic",
+        ][index], // Random specs
+        image: image.urls.small, // Unsplash image URL
+      }));
+
+      setLatestDeals(deals); // Update state with fetched deals
+    } catch (error) {
+      console.error("Error fetching Unsplash images for Latest Deals:", error);
+    }
+  };
+
+  // Fetch images on component mount
+  useEffect(() => {
+    fetchLatestDealsImages();
+  }, []);
+
   // Function to handle clicking on a car card
   const handleCardClick = (car) => {
     setSelectedCar(car); // Set the selected car
@@ -196,49 +239,103 @@ export default function NewCars() {
   };
 
   return (
-    <div className="relative">
-      {/* If showGallery is false, display the Hero Section */}
+    <Layout>
+      {/* Main Content */}
       {!showGallery ? (
         <>
           {/* Hero Section */}
-          <div className="bg-green-500 text-white text-center py-16">
+          <section className="bg-green-500 text-white text-center py-16 relative">
             <h1 className="text-4xl font-bold mb-4">New Cars</h1>
             <p className="text-lg">Meet your perfect car</p>
-          </div>
 
-          {/* Overlapping Search Bar */}
-          <div className="absolute left-1/2 transform -translate-x-1/2 -bottom-8 bg-white shadow-lg rounded-lg p-4 w-11/12 max-w-4xl">
-            <form
-              className="flex flex-wrap items-center gap-4"
-              onSubmit={handleSearch}
-            >
-              {/* Postcode Input */}
-              <input
-                type="text"
-                placeholder="Postcode"
-                className="flex-1 p-2 border border-gray-300 rounded"
-              />
-              {/* Make Input */}
-              <input
-                type="text"
-                placeholder="Make"
-                className="flex-1 p-2 border border-gray-300 rounded"
-              />
-              {/* Model Input */}
-              <input
-                type="text"
-                placeholder="Model"
-                className="flex-1 p-2 border border-gray-300 rounded"
-              />
-              {/* Search Button */}
-              <button
-                type="submit"
-                className="bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600 transition-all"
+            {/* Overlapping Search Bar */}
+            <div className="absolute left-1/2 transform -translate-x-1/2 -bottom-12 bg-white shadow-lg rounded-lg p-4 w-11/12 max-w-4xl">
+              <form
+                className="flex flex-wrap items-center gap-4"
+                onSubmit={handleSearch}
               >
-                Search
-              </button>
-            </form>
-          </div>
+                {/* Postcode Input */}
+                <input
+                  type="text"
+                  placeholder="Postcode"
+                  className="flex-1 p-2 border border-gray-300 rounded"
+                />
+                {/* Make Input */}
+                <input
+                  type="text"
+                  placeholder="Make"
+                  className="flex-1 p-2 border border-gray-300 rounded"
+                />
+                {/* Model Input */}
+                <input
+                  type="text"
+                  placeholder="Model"
+                  className="flex-1 p-2 border border-gray-300 rounded"
+                />
+                {/* Search Button */}
+                <button
+                  type="submit"
+                  className="bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600 transition-all"
+                >
+                  Search
+                </button>
+              </form>
+            </div>
+          </section>
+
+          {/* Latest Deals Section */}
+          <section className="bg-gray-100 py-16 mt-20">
+            <h2 className="text-3xl font-bold text-center mb-12">Latest Deals</h2>
+            <p className="text-center text-gray-600 mb-12">
+              Discover our handpicked deals on the latest cars with flexible contracts and affordable prices.
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 2xl:grid-cols-4 gap-8 px-4">
+              {latestDeals.map((deal) => (
+                <div
+                  key={deal.id}
+                  className="bg-white shadow-lg rounded-lg overflow-hidden"
+                >
+                  <img
+                    src={deal.image}
+                    alt={deal.makeModel}
+                    className="w-full h-48 object-cover"
+                  />
+                  <div className="p-4">
+                    <div className="flex justify-between items-center mb-4">
+                      {/* Left Column: Price */}
+                      <div className="text-left">
+                        <p className="text-sm text-gray-500">From</p>
+                        <p className="text-2xl font-bold text-green-500">£{deal.price.split("/")[0]}</p>
+                        <p className="text-xs text-gray-500">Per month (inc. VAT)</p>
+                      </div>
+
+                      {/* Right Column: Details */}
+                      <div className="text-sm text-gray-600 flex flex-col gap-1">
+                        <p className="whitespace-nowrap">
+                          <span className="font-bold">{deal.initialPayment.split(" ")[0]}</span>{" "}
+                          {deal.initialPayment.split(" ").slice(1).join(" ")}
+                        </p>
+                        <p className="whitespace-nowrap">
+                          <span className="font-bold">{deal.contract.split(" ")[0]}</span>{" "}
+                          {deal.contract.split(" ").slice(1).join(" ")}
+                        </p>
+                        <p className="whitespace-nowrap">
+                          <span className="font-bold">{deal.mileage.split(" ")[0]}</span>{" "}
+                          {deal.mileage.split(" ").slice(1).join(" ")}
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Discreet Line */}
+                    <hr className="border-t border-gray-200 my-4" />
+
+                    <h3 className="text-lg font-bold mb-2">{deal.makeModel}</h3>
+                    <p className="text-gray-600">{deal.spec}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
         </>
       ) : (
         // If showGallery is true, display the Gallery
@@ -482,6 +579,6 @@ export default function NewCars() {
           </div>
         </div>
       )}
-    </div>
+    </Layout>
   );
 }
