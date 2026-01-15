@@ -30,7 +30,7 @@ export default function NewCars() {
   const handleSearch = async (e) => {
     e.preventDefault(); // Prevent form submission
     try {
-      const response = await fetch("/mock_cars.json"); // Load JSON from public folder
+      const response = await fetch("/mock_new.json"); // Load JSON from public folder
       const data = await response.json();
 
       setTotalCars(data.length); // Set the total number of cars
@@ -126,7 +126,7 @@ export default function NewCars() {
     if (page > 1) {
       const fetchNextBatch = async () => {
         try {
-          const response = await fetch("/mock_cars.json"); // Load JSON from public folder
+          const response = await fetch("/mock_new.json"); // Load JSON from public folder
           const data = await response.json();
 
           const cardsToDisplay = calculateCardsToDisplay(); // Calculate the number of cards to display
