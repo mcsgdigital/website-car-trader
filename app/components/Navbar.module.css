@@ -1,6 +1,6 @@
-.navbar {
+/* .navbar {
     background-color: var(--foreground-secondary) !important;
-}
+} */
 
 .signInButton {
     padding: 8px 15px;
@@ -22,6 +22,6 @@
     height: 50px;
 }
 
-.navLinks a {
+/* .navLinks a {
     color: #fff;
-}
+} */
