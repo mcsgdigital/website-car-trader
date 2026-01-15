@@ -33,6 +33,54 @@ export default function Footer() {
             </div>
           </div>
         </div>
+
+        {/* Sitemap Section */}
+        <div className="text-center mb-8 py-6 rounded-lg">
+          <h3 className="text-2xl font-bold mb-4">Sitemap</h3>
+          <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 text-sm">
+            <li>
+              <a href="/about" className="hover:underline">
+                About Us
+              </a>
+            </li>
+            <li>
+              <a href="/services" className="hover:underline">
+                Services
+              </a>
+            </li>
+            <li>
+              <a href="/contact" className="hover:underline">
+                Contact
+              </a>
+            </li>
+            <li>
+              <a href="/faq" className="hover:underline">
+                FAQ
+              </a>
+            </li>
+            <li>
+              <a href="/terms" className="hover:underline">
+                Terms of Service
+              </a>
+            </li>
+            <li>
+              <a href="/privacy" className="hover:underline">
+                Privacy Policy
+              </a>
+            </li>
+            <li>
+              <a href="/blog" className="hover:underline">
+                Blog
+              </a>
+            </li>
+            <li>
+              <a href="/careers" className="hover:underline">
+                Careers
+              </a>
+            </li>
+          </ul>
+        </div>
+
         {/* Footer Bottom */}
         <div className="text-center text-sm text-gray-400 mt-8">
           <p>&copy; {new Date().getFullYear()} Car Trader. All rights reserved.</p>
