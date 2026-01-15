@@ -3,9 +3,9 @@ import Layout from "../../components/Layout";
 export default function SellCar() {
   return (
     <Layout>
-      <div className="bg-gray-50 min-h-screen">
+      <div className="min-h-screen ">
         {/* Hero Section */}
-        <section className="bg-green-500 text-white text-center py-16">
+        <section className="bg-green-500 text-white text-center py-16 rounded-lg">
           <h1 className="text-4xl font-bold mb-4">Sell your car</h1>
           <p className="text-lg">List your car for sale and connect with buyers.</p>
         </section>

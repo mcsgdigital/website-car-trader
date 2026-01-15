@@ -244,7 +244,7 @@ export default function NewCars() {
       {!showGallery ? (
         <>
           {/* Hero Section */}
-          <section className="bg-green-500 text-white text-center py-16 relative">
+          <section className="bg-green-500 text-white text-center py-16 relative rounded-lg">
             <h1 className="text-4xl font-bold mb-4">New Cars</h1>
             <p className="text-lg">Meet your perfect car</p>
 
@@ -284,7 +284,7 @@ export default function NewCars() {
           </section>
 
           {/* Latest Deals Section */}
-          <section className="bg-gray-100 py-16 mt-20">
+          <section className="bg-gray-100 py-16 mt-20 rounded-lg">
             <h2 className="text-3xl font-bold text-center mb-12">Latest Deals</h2>
             <p className="text-center text-gray-600 mb-12">
               Discover our handpicked deals on the latest cars with flexible contracts and affordable prices.
@@ -293,7 +293,7 @@ export default function NewCars() {
               {latestDeals.map((deal) => (
                 <div
                   key={deal.id}
-                  className="bg-white shadow-lg rounded-lg overflow-hidden"
+                  className="bg-white shadow-lg rounded-lg overflow-hidden cursor-pointer"
                 >
                   <img
                     src={deal.image}
@@ -305,7 +305,7 @@ export default function NewCars() {
                       {/* Left Column: Price */}
                       <div className="text-left">
                         <p className="text-sm text-gray-500">From</p>
-                        <p className="text-2xl font-bold text-green-500">£{deal.price.split("/")[0]}</p>
+                        <p className="text-2xl font-bold text-green-500">{deal.price.split("/")[0]}</p>
                         <p className="text-xs text-gray-500">Per month (inc. VAT)</p>
                       </div>
 
@@ -326,7 +326,6 @@ export default function NewCars() {
                       </div>
                     </div>
 
-                    {/* Discreet Line */}
                     <hr className="border-t border-gray-200 my-4" />
 
                     <h3 className="text-lg font-bold mb-2">{deal.makeModel}</h3>
@@ -334,6 +333,55 @@ export default function NewCars() {
                   </div>
                 </div>
               ))}
+            </div>
+          </section>
+
+          {/* 2x2 Section */}
+          <section className="bg-gray-100 py-16 mt-20 rounded-lg">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 px-4">
+              {/* Top Left Block */}
+              <div className="flex flex-col justify-start">
+                <div className="w-[70%] m-auto">
+                  <h3 className="text-2xl font-bold mb-4">Find the best new cars</h3>
+                  <p className="text-gray-600 mb-4">
+                    Explore a wide range of new cars tailored to your needs and budget.
+                  </p>
+                  <button className="border border-green-500 text-green-500 px-4 py-2 rounded-full hover:bg-green-500 hover:text-white transition-all cursor-pointer">
+                    Explore Now
+                  </button>
+                </div>
+              </div>
+
+              {/* Top Right Block */}
+              <div className="relative">
+                <img
+                  src="/images/newcars-driving-down.jpg"
+                  alt="Driving down the road"
+                  className="w-full h-full object-cover rounded-lg shadow-lg"
+                />
+              </div>
+
+              {/* Bottom Left Block */}
+              <div className="relative">
+                <img
+                  src="/images/newcars-keys.jpg"
+                  alt="Car keys"
+                  className="w-full h-full object-cover rounded-lg shadow-lg"
+                />
+              </div>
+
+              {/* Bottom Right Block */}
+              <div className="flex flex-col justify-start">
+                <div className="w-[70%] m-auto">
+                  <h3 className="text-2xl font-bold mb-4">Buy with confidence</h3>
+                  <p className="text-gray-600 mb-4">
+                    Enjoy peace of mind with trusted dealers and secure transactions.
+                  </p>
+                  <button className="border border-green-500 text-green-500 px-4 py-2 rounded-full hover:bg-green-500 hover:text-white transition-all cursor-pointer">
+                    Learn More
+                  </button>
+                </div>
+              </div>
             </div>
           </section>
         </>

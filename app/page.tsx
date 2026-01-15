@@ -4,7 +4,7 @@ export default function Home() {
     return (
         <Layout>
             {/* Hero Section with Cards */}
-            <section className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+            <section className="flex flex-col items-center justify-center min-h-screen bg-gray-100 rounded-lg">
                 {/* Hero Content */}
                 <div className="w-11/12 max-w-6xl bg-white rounded-lg shadow-lg p-8 flex mt-[5%]">
                     {/* Form Section */}
