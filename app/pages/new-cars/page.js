@@ -388,6 +388,13 @@ export default function NewCars() {
       ) : (
         // If showGallery is true, display the Gallery
         <>
+        {/* Close Button */}
+          <button
+            className="absolute right-4 bg-red-500 hover:bg-red-600 text-white w-8 h-8 rounded flex items-center justify-center shadow-lg transition-all cursor-pointer z-20"
+            onClick={() => setShowGallery(false)} // Close the gallery
+          >
+            ✕
+          </button>
           {/* Filter Bar */}
           <div className="sticky top-0 bg-green-500 text-white z-10 shadow-md px-6 py-3 rounded-full mx-auto w-fit flex gap-4 items-center">
             {/* Prominent FILTER Button */}
