@@ -11,7 +11,7 @@ export default function SellCar() {
         </section>
 
         {/* Overlapping Boxes */}
-        <div className="relative -mt-12 flex justify-center gap-8 px-4">
+        <div className="relative -mt-12 flex flex-col md:flex-row justify-center gap-8 px-4">
           {/* Box 1: Advertise on Car Traders */}
           <div className="bg-white shadow-lg rounded-lg p-6 w-full max-w-md">
             <h2 className="text-2xl font-bold mb-4">Advertise on Car Traders</h2>
