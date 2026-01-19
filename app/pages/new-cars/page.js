@@ -248,38 +248,14 @@ export default function NewCars() {
             <h1 className="text-4xl font-bold mb-4">New Cars</h1>
             <p className="text-lg">Meet your perfect car</p>
 
-            {/* Overlapping Search Bar */}
-            <div className="absolute left-1/2 transform -translate-x-1/2 -bottom-12 bg-white shadow-lg rounded-lg p-4 w-11/12 max-w-4xl">
-              <form
-                className="flex flex-wrap items-center gap-4"
-                onSubmit={handleSearch}
+            {/* Search Button */}
+            <div className="absolute left-1/2 transform -translate-x-1/2 bottom-[-12%]">
+              <button
+                className="bg-green-600 text-white px-8 py-3 rounded-full hover:bg-green-700 transition-all shadow-lg border-4 border-white"
+                onClick={handleSearch} // Trigger the search functionality
               >
-                {/* Postcode Input */}
-                <input
-                  type="text"
-                  placeholder="Postcode"
-                  className="flex-1 p-2 border border-gray-300 rounded"
-                />
-                {/* Make Input */}
-                <input
-                  type="text"
-                  placeholder="Make"
-                  className="flex-1 p-2 border border-gray-300 rounded"
-                />
-                {/* Model Input */}
-                <input
-                  type="text"
-                  placeholder="Model"
-                  className="flex-1 p-2 border border-gray-300 rounded"
-                />
-                {/* Search Button */}
-                <button
-                  type="submit"
-                  className="bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600 transition-all"
-                >
-                  Search
-                </button>
-              </form>
+                Search
+              </button>
             </div>
           </section>
 
