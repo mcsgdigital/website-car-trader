@@ -1,6 +1,4 @@
 export default function CarCard_lightbox_new({ car, closeLightbox }) {
-    console.log("Lightbox car data:", car);
-    
     
     return (
         <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50">

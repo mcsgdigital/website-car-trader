@@ -1,4 +1,5 @@
 import Layout from "../../components/Layout";
+import SectionCustomersFeedback from "../../components/SectionCustomersFeedback";
 
 export default function SellCar() {
   return (
@@ -40,43 +41,8 @@ export default function SellCar() {
         </div>
 
         {/* Customer Feedback Section */}
-        <section className="bg-white py-16">
-          <h2 className="text-3xl font-bold text-center mb-12">Join our happy customers</h2>
-          <div className="flex flex-wrap justify-center gap-8 px-4">
-            {/* Feedback Block 1 */}
-            <div className="bg-gray-100 shadow-md rounded-lg p-6 w-full max-w-sm">
-              <p className="text-gray-700 italic mb-4">
-                "The process was so easy! I sold my car within a week and got a great price."
-              </p>
-              <div className="flex items-center mb-4">
-                <span className="text-yellow-500">★★★★★</span>
-              </div>
-              <p className="text-gray-500 font-bold">- John Doe</p>
-            </div>
-
-            {/* Feedback Block 2 */}
-            <div className="bg-gray-100 shadow-md rounded-lg p-6 w-full max-w-sm">
-              <p className="text-gray-700 italic mb-4">
-                "I loved how simple it was to place an ad. Highly recommend Car Traders!"
-              </p>
-              <div className="flex items-center mb-4">
-                <span className="text-yellow-500">★★★★★</span>
-              </div>
-              <p className="text-gray-500 font-bold">- Jane Smith</p>
-            </div>
-
-            {/* Feedback Block 3 */}
-            <div className="bg-gray-100 shadow-md rounded-lg p-6 w-full max-w-sm">
-              <p className="text-gray-700 italic mb-4">
-                "Selling my car to a dealer was quick and hassle-free. Great experience overall!"
-              </p>
-              <div className="flex items-center mb-4">
-                <span className="text-yellow-500">★★★★★</span>
-              </div>
-              <p className="text-gray-500 font-bold">- Alex Johnson</p>
-            </div>
-          </div>
-        </section>
+        <SectionCustomersFeedback />
+        
       </div>
     </Layout>
   );
