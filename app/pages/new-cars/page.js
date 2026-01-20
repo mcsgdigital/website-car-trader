@@ -9,6 +9,7 @@ import CarCard_new from "../../components/CarCard_new";
 import FilterPopup from "../../components/FilterPopup";
 import SectionDeal from "../../components/SectionDeal";
 import SectionGrid from "../../components/SectionGrid";
+import CarCard_lightbox_new from "../../components/CarCard_lightbox_new";
 
 
 export default function NewCars() {
@@ -211,8 +212,11 @@ export default function NewCars() {
   // Function to handle clicking on a car card
   const handleCardClick = (car) => {
     setSelectedCar(car); // Set the selected car
-    console.log("Car clicked:", car);
-    
+  };
+
+  // Function to close the lightbox
+  const closeLightbox = () => {
+    setSelectedCar(null); // Clear the selected car
   };
 
   const toggleCategory = (category) => {
@@ -270,6 +274,11 @@ export default function NewCars() {
             isLoading={isLoading}
           />
         </>
+      )}
+
+      {/* Lightbox Section */}
+      {selectedCar && (
+        <CarCard_lightbox_new car={selectedCar} closeLightbox={closeLightbox} />
       )}
 
       <FilterPopup

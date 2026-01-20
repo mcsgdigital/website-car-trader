@@ -7,6 +7,7 @@ import Gallery from "../../components/Gallery";
 import FilterPopup from "../../components/FilterPopup";
 import CarCard_used from "../../components/CarCard_used";
 import Layout from "../../components/Layout";
+import CarCard_lightbox_used from "../../components/CarCard_lightbox_used";
 
 export default function UsedCars() {
   const [cars, setCars] = useState([]); // State to store loaded cars
@@ -313,6 +314,12 @@ export default function UsedCars() {
         </>
       )}
 
+      {/* Lightbox for Selected Car */}
+      {selectedCar && (
+        <CarCard_lightbox_used car={selectedCar} closeLightbox={closeLightbox} />
+      )}
+
+      {/* Filter Popup */}
       <FilterPopup
         activeFilter={activeFilter}
         setActiveFilter={setActiveFilter}
