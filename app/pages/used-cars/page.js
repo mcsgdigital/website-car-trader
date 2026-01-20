@@ -1,6 +1,11 @@
 "use client";
 import { useState, useEffect, useCallback } from "react";
 
+import HeroSection from "../../components/HeroSection";
+import FilterBar from "../../components/FilterBar";
+import Gallery from "../../components/Gallery";
+import FilterPopup from "../../components/FilterPopup";
+import CarCard_used from "../../components/CarCard_used";
 import Layout from "../../components/Layout";
 
 export default function UsedCars() {
@@ -33,6 +38,7 @@ export default function UsedCars() {
     try {
       const response = await fetch("/mock_used.json"); // Load JSON from public folder
       const data = await response.json();
+      
 
       setTotalCars(data.length); // Set the total number of cars
 
@@ -245,20 +251,12 @@ export default function UsedCars() {
       {!showGallery ? (
         <>
           {/* Hero Section */}
-          <section className="bg-gray-400 text-white text-center py-16 relative rounded-lg">
-            <h1 className="text-4xl font-bold mb-4">Used Cars</h1>
-            <p className="text-lg">Find the best deals on pre-owned cars.</p>
-
-            {/* Overlapping Search Button */}
-            <div className="absolute left-1/2 transform -translate-x-1/2 -bottom-7">
-              <button
-                className="bg-green-600 text-white px-8 py-3 rounded-full hover:bg-green-700 transition-all shadow-lg border-4 border-white"
-                onClick={handleSearch}
-              >
-                Search
-              </button>
-            </div>
-          </section>
+          <HeroSection
+            title="Used Cars"
+            subtitle="Find the best deals on pre-owned cars."
+            onSearch={handleSearch}
+            bgColor="bg-gray-400"
+          />
 
           {/* Latest Deals Section */}
           <section className="bg-gray-100 py-8 mt-20 rounded-lg">
@@ -304,252 +302,24 @@ export default function UsedCars() {
           >
             ✕
           </button>
-
-          {/* Filter Bar */}
-          <div className="sticky top-0 z-10 px-6 py-3 mx-auto w-fit flex gap-4 items-center md:bg-green-500 md:text-white md:shadow-md md:rounded-full">
-            {/* Single Filter Button for Mobile View */}
-            <button
-              className="bg-green-600 text-white px-8 py-3 rounded-full hover:bg-green-700 transition-all shadow-lg border-4 border-white md:hidden"
-              onClick={() => setActiveFilter("Filter")} // Open the filter window
-            >
-              Filter
-            </button>
-
-            {/* Full Filter Bar for Larger Screens */}
-            <div className="hidden md:flex gap-4">
-              <button
-                className="bg-green-600 text-white px-8 py-3 rounded-full hover:bg-green-700 transition-all shadow-lg border-4 border-white"
-                onClick={() => setActiveFilter("Filter")} // Open the filter window
-              >
-                All
-              </button>
-              {["Make", "Price", "Mileage", "Gearbox", "Body Type"].map((filter) => (
-                <button
-                  key={filter}
-                  className="bg-green-700 hover:bg-green-600 text-white px-4 py-2 rounded-full transition-all cursor-pointer"
-                  onClick={() => setActiveFilter(filter)} // Open the lightbox for the selected filter
-                >
-                  {filter}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Scrollable Gallery */}
-          <div
-            className="p-8 h-[80vh] overflow-y-auto -mt-8" // Add negative margin to overlap the filter bar
-            id="scrollable-gallery"
-          >
-            {/* Title */}
-            <h1 className="text-3xl font-bold mb-8 mt-6">Available Cars</h1>
-
-            {/* Number of Results */}
-            <p className="text-gray-600 mb-8">
-              See {cars.length} of {totalCars} {totalCars === 1 ? "result" : "results"} found
-            </p>
-
-            {/* Car Cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6">
-              {cars.map((car, index) => (
-                <div
-                  key={index}
-                  className="bg-white shadow-lg rounded-lg overflow-hidden flex flex-col max-w-[300px] w-full mx-auto cursor-pointer"
-                  onClick={() => handleCardClick(car)}
-                >
-                  {/* Car Image */}
-                  <img
-                    src={car.image}
-                    alt={`${car.make} ${car.model}`}
-                    className="w-full h-48 object-cover"
-                    loading="lazy" // Enable lazy loading
-                  />
-                  <div className="p-4 flex flex-col justify-between flex-1">
-                    {/* Car Details */}
-                    <div>
-                      <h2 className="text-xl font-bold mb-2">
-                        {car.make} {car.model}
-                      </h2>
-                      <p className="text-gray-600">{car.instock && "IN STOCK"}</p>
-                    </div>
-
-                    {/* Bottom Section */}
-                    <div className="mt-auto">
-                      <p className="text-black-600">£{car.price}</p>
-                      <p className="text-sm text-gray-600">Mileage: {car.mileage.toLocaleString()} miles</p>
-                      <p className="text-sm text-gray-600">Year: {car.year}</p>
-                      <p className="text-sm text-gray-600">Engine: {car.enginesize}L</p>
-                      <p className="text-sm text-gray-600">Gearbox: {car.gearbox ? "Manual" : "Automatic"}</p>
-                      <p className="text-sm text-gray-600">Location: {car.city}</p>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Scroll Sentinel */}
-            <div id="scroll-sentinel" className="h-4"></div> {/* Scroll sentinel */}
-            {isLoading && <p>Loading more images...</p>}
-          </div>
+          <FilterBar activeFilter={activeFilter} setActiveFilter={setActiveFilter} />
+          <Gallery
+            ComponentCard={CarCard_used}
+            cars={cars}
+            totalCars={totalCars}
+            handleCardClick={handleCardClick}
+            isLoading={isLoading}
+          />
         </>
       )}
 
-      {/* Lightbox Section */}
-      {selectedCar && (
-        <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg shadow-lg w-11/12 max-w-4xl p-8 relative h-[80vh] overflow-y-auto">
-            {/* Close Button */}
-            <button
-              className="absolute top-4 right-4 text-gray-500 hover:text-gray-800 cursor-pointer"
-              onClick={closeLightbox}
-            >
-              ✕
-            </button>
-
-            {/* Gallery Section */}
-            <div className="mb-8 relative">
-              <img
-                src={selectedCar.image}
-                alt={`${selectedCar.make} ${selectedCar.model}`}
-                className="w-full h-64 object-cover rounded-lg"
-              />
-              <button
-                className="absolute bottom-4 left-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-              >
-                Gallery
-              </button>
-            </div>
-
-            {/* Two-Column Section */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {/* Left Column */}
-              <div>
-                <div className="mb-4 p-4 bg-gray-50 rounded-lg shadow-sm">
-                  <p className="text-gray-600">Distance: {selectedCar.distance} miles</p>
-                </div>
-                <div className="mb-4 p-4 bg-gray-50 rounded-lg shadow-sm">
-                  <h2 className="text-xl font-bold">
-                    {selectedCar.make} {selectedCar.model}
-                  </h2>
-                  <p className="text-gray-600">Price: £{selectedCar.price}</p>
-                  <p className="text-gray-600">Saving: £{selectedCar.saving}</p>
-                </div>
-                <div className="mb-4 p-4 bg-gray-50 rounded-lg shadow-sm">
-                  <h3 className="text-lg font-bold">Overview</h3>
-                  <p>Gearbox: {selectedCar.gearbox ? "Manual" : "Automatic"}</p>
-                  <p>Doors: {selectedCar.doors}</p>
-                  <p>Engine: {selectedCar.engine}L</p>
-                </div>
-                <div className="p-4 bg-gray-50 rounded-lg shadow-sm">
-                  <h3 className="text-lg font-bold">Description</h3>
-                  <p>
-                    This is a high-quality car with excellent features, perfect for your needs.
-                  </p>
-                </div>
-              </div>
-
-              {/* Right Column */}
-              <div className="sticky top-4">
-                <div className="bg-gray-100 p-4 rounded-lg shadow-md">
-                  <h3 className="text-lg font-bold mb-4">Contact Seller</h3>
-                  <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-full mb-4">
-                    Call: {selectedCar.contact_phone}
-                  </button>
-                  <button className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 w-full">
-                    Message
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {activeFilter && (
-        <div
-          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
-          style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }} // Fallback for transparency
-        >
-          <div className="bg-white rounded-lg shadow-lg w-11/12 max-w-[600px] p-8 relative">
-            {/* Close Button */}
-            <button
-              className="absolute top-4 right-4 text-gray-500 hover:text-gray-800 cursor-pointer"
-              onClick={() => {
-                setActiveFilter(null); // Close the lightbox
-                setExpandedCategory(null); // Reset expanded category
-              }}
-            >
-              ✕
-            </button>
-
-            {/* Filter Title */}
-            <h2 className="text-2xl font-bold mb-4">Filter / Sort</h2>
-
-            {/* Collapsible Categories */}
-            <div className="space-y-6">
-              {["Price", "Mileage", "Make", "Gearbox", "Body Type"].map((category, index) => (
-                <div
-                  key={index}
-                  className={`border-b border-gray-200 pb-4 ${
-                    expandedCategory === category ? "bg-gray-100" : "" // Apply light gray background if expanded
-                  }`}
-                >
-                  {/* Category Header */}
-                  <div
-                    className={`flex justify-between items-center cursor-pointer p-2 rounded ${
-                      expandedCategory === category ? "bg-green-500 text-white" : "bg-transparent"
-                    }`} // Green background and white text for expanded category
-                    onClick={() => toggleCategory(category)} // Toggle the category
-                  >
-                    <label className="block text-lg font-medium">{category}</label>
-                    <span className="text-gray-200">
-                      {expandedCategory === category ? "▲" : "▼"} {/* Arrow indicator */}
-                    </span>
-                  </div>
-
-                  {/* Category Content */}
-                  {expandedCategory === category && (
-                    <div className="mt-4">
-                      {["Price", "Mileage"].includes(category) ? (
-                        <div className="flex items-center gap-4">
-                          <input
-                            type="number"
-                            placeholder="Min"
-                            className="w-1/2 p-2 border border-gray-300 rounded"
-                          />
-                          <input
-                            type="number"
-                            placeholder="Max"
-                            className="w-1/2 p-2 border border-gray-300 rounded"
-                          />
-                        </div>
-                      ) : (
-                        <select className="w-full p-2 border border-gray-300 rounded">
-                          <option value="">Select {category}</option>
-                          <option value="Option 1">{category} Option 1</option>
-                          <option value="Option 2">{category} Option 2</option>
-                          <option value="Option 3">{category} Option 3</option>
-                        </select>
-                      )}
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-            {/* Search Button */}
-            <div className="flex justify-end mt-4">
-              <button
-                className="bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600"
-                onClick={() => {
-                  setActiveFilter(null); // Close the lightbox
-                  console.log("Search triggered"); // Debugging log
-                }}
-              >
-                Search
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      <FilterPopup
+        activeFilter={activeFilter}
+        setActiveFilter={setActiveFilter}
+        expandedCategory={expandedCategory}
+        setExpandedCategory={setExpandedCategory}
+        toggleCategory={toggleCategory}
+      />
     </Layout>
   );
 }
