@@ -249,7 +249,7 @@ export default function NewCars() {
             <p className="text-lg">Meet your perfect car</p>
 
             {/* Search Button */}
-            <div className="absolute left-1/2 transform -translate-x-1/2 bottom-[-12%]">
+            <div className="absolute left-1/2 transform -translate-x-1/2 bottom-[-15%]">
               <button
                 className="bg-green-600 text-white px-8 py-3 rounded-full hover:bg-green-700 transition-all shadow-lg border-4 border-white"
                 onClick={handleSearch} // Trigger the search functionality
@@ -372,24 +372,36 @@ export default function NewCars() {
             ✕
           </button>
           {/* Filter Bar */}
-          <div className="sticky top-0 bg-green-500 text-white z-10 shadow-md px-6 py-3 rounded-full mx-auto w-fit flex gap-4 items-center">
-            {/* Prominent FILTER Button */}
+          <div className="sticky top-0 z-10 px-6 py-3 mx-auto w-fit flex gap-4 items-center md:bg-green-500 md:text-white md:shadow-md md:rounded-full">
+            {/* Single Filter Button for Mobile View */}
             <button
-              className="bg-green-800 hover:bg-green-700 text-white px-6 py-3 rounded-full font-bold shadow-lg transition-all cursor-pointer"
+              className="bg-green-600 text-white px-8 py-3 rounded-full hover:bg-green-700 transition-all shadow-lg border-4 border-white md:hidden"
               onClick={() => setActiveFilter("Filter")} // Open the filter window
             >
-              FILTER
+              Filter
             </button>
-            {/* Other Filter Buttons */}
-            {["Make", "Price", "Mileage", "Gearbox", "Body Type"].map((filter) => (
+
+            {/* Full Filter Bar for Larger Screens */}
+            <div className="hidden md:flex gap-4">
+              {/* Styled All Button */}
               <button
-                key={filter}
-                className="bg-green-700 hover:bg-green-600 text-white px-4 py-2 rounded-full transition-all cursor-pointer"
-                onClick={() => setActiveFilter(filter)} // Open the lightbox for the selected filter
+                className="bg-green-600 text-white px-8 py-3 rounded-full hover:bg-green-700 transition-all shadow-lg border-4 border-white"
+                onClick={() => setActiveFilter("All")} // Set the active filter to "All"
               >
-                {filter}
+                All
               </button>
-            ))}
+
+              {/* Other Filter Buttons */}
+              {["Make", "Price", "Mileage", "Gearbox", "Body Type"].map((filter) => (
+                <button
+                  key={filter}
+                  className="bg-green-700 hover:bg-green-600 text-white px-4 py-2 rounded-full transition-all cursor-pointer"
+                  onClick={() => setActiveFilter(filter)} // Open the lightbox for the selected filter
+                >
+                  {filter}
+                </button>
+              ))}
+            </div>
           </div>
 
           {/* Scrollable Gallery */}
