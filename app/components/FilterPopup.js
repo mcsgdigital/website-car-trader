@@ -1,4 +1,8 @@
 import React from "react";
+import FilterType_range from "./filter/FilterType_range";
+import FilterType_list from "./filter/FilterType_list";
+import FilterType_boolean from "./filter/FilterType_boolean";
+
 
 const FilterPopup = ({
   activeFilter,
@@ -6,8 +10,49 @@ const FilterPopup = ({
   expandedCategory,
   setExpandedCategory,
   toggleCategory,
+  data,
+  filters,
 }) => {
   if (!activeFilter) return null; // Don't render if no active filter
+
+  console.log("FilterPopup data:", data); // Debugging log
+  console.log("FilterPopup filters:", filters); // Debugging log
+  
+
+  // Extract unique makes from the data
+  const uniqueMakes = [...new Set(data.map((car) => car.make))];
+  // order the makes alphabetically
+  uniqueMakes.sort();
+
+  // Extract unique makes from the data
+  const uniqueEngines = [...new Set(data.map((car) => car.engine))];
+  // order the makes alphabetically
+  uniqueEngines.sort();
+
+  function filterGroup({ status }) {
+    let content;
+  
+    switch (status) {
+      case 'Make':
+        content = <FilterType_list list={uniqueMakes} listName={status}/>;
+        break;
+      case 'Engine':
+        content = <FilterType_list list={uniqueEngines} listName={status} unitName={"L"}/>;
+        break;
+      case 'Gearbox':
+        content = <FilterType_boolean valueA={"Automatic"} valueB={"Manual"} boolName={status}/>;
+        break;
+      case 'Price':
+      case 'Mileage':
+      case 'Year':
+        content = <FilterType_range />;
+        break;
+      default:
+        content = <FilterType_range />;
+    }
+  
+    return content;
+  }
 
   return (
     <div
@@ -31,7 +76,7 @@ const FilterPopup = ({
 
         {/* Collapsible Categories */}
         <div className="space-y-6">
-          {["Price", "Mileage", "Make", "Gearbox", "Body Type"].map((category, index) => (
+          {filters.map((category, index) => (
             <div
               key={index}
               className={`border-b border-gray-200 pb-4 ${
@@ -54,27 +99,10 @@ const FilterPopup = ({
               {/* Category Content */}
               {expandedCategory === category && (
                 <div className="mt-4">
-                  {["Price", "Mileage"].includes(category) ? (
-                    <div className="flex items-center gap-4">
-                      <input
-                        type="number"
-                        placeholder="Min"
-                        className="w-1/2 p-2 border border-gray-300 rounded"
-                      />
-                      <input
-                        type="number"
-                        placeholder="Max"
-                        className="w-1/2 p-2 border border-gray-300 rounded"
-                      />
-                    </div>
-                  ) : (
-                    <select className="w-full p-2 border border-gray-300 rounded">
-                      <option value="">Select {category}</option>
-                      <option value="Option 1">{category} Option 1</option>
-                      <option value="Option 2">{category} Option 2</option>
-                      <option value="Option 3">{category} Option 3</option>
-                    </select>
-                  )}
+                  {
+                    // Render appropriate filter type based on category
+                    filterGroup({ status: category })
+                  }
                 </div>
               )}
             </div>

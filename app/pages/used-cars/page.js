@@ -20,6 +20,7 @@ export default function UsedCars() {
   const [activeFilter, setActiveFilter] = useState(null); // State to track the active filter
   const [expandedCategory, setExpandedCategory] = useState(null); // State to track the expanded category
   const [latestDeals, setLatestDeals] = useState([]); // State to store latest deals with images
+  const filterCategories = ['Price', 'Mileage', 'Make', 'Gearbox', 'Year', 'Engine'];
 
   const calculateCardsToDisplay = () => {
     const galleryWidth = window.innerWidth; // Width of the screen
@@ -303,7 +304,7 @@ export default function UsedCars() {
           >
             ✕
           </button>
-          <FilterBar activeFilter={activeFilter} setActiveFilter={setActiveFilter} />
+          <FilterBar categories={filterCategories} activeFilter={activeFilter} setActiveFilter={setActiveFilter} />
           <Gallery
             ComponentCard={CarCard_used}
             cars={cars}
@@ -326,6 +327,8 @@ export default function UsedCars() {
         expandedCategory={expandedCategory}
         setExpandedCategory={setExpandedCategory}
         toggleCategory={toggleCategory}
+        data={cars}
+        filters={filterCategories}
       />
     </Layout>
   );

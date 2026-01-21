@@ -1,6 +1,6 @@
 import React from "react";
 
-const FilterBar = ({ activeFilter, setActiveFilter }) => {
+const FilterBar = ({ activeFilter, setActiveFilter, categories }) => {
   return (
     <div className="sticky top-0 z-10 px-6 py-3 mx-auto w-fit flex gap-4 items-center md:bg-green-500 md:text-white md:shadow-md md:rounded-full">
       {/* Single Filter Button for Mobile View */}
@@ -19,7 +19,7 @@ const FilterBar = ({ activeFilter, setActiveFilter }) => {
         >
           All
         </button>
-        {["Make", "Price", "Mileage", "Gearbox", "Body Type"].map((filter) => (
+        {categories.map((filter) => (
           <button
             key={filter}
             className="bg-green-700 hover:bg-green-600 text-white px-4 py-2 rounded-full transition-all cursor-pointer"
