@@ -46,7 +46,6 @@ const FilterPopup = ({
     return content;
   }
 
-  // Updated toggleCategory to allow multiple categories to remain expanded
   const handleToggleCategory = (category) => {
     if (expandedCategory.includes(category)) {
       // Remove the category from the expanded list
@@ -62,7 +61,7 @@ const FilterPopup = ({
       className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
       style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }} // Fallback for transparency
     >
-      <div className="bg-white rounded-lg shadow-lg w-11/12 max-w-[600px] p-8 relative">
+      <div className="bg-white rounded-lg shadow-lg w-11/12 max-w-[600px] p-8 relative max-h-[80vh] overflow-y-auto">
         {/* Close Button */}
         <button
           className="absolute top-4 right-4 text-gray-500 hover:text-gray-800 cursor-pointer"
