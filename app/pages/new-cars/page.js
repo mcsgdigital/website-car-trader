@@ -11,7 +11,6 @@ import SectionDeal from "../../components/SectionDeal";
 import SectionGrid from "../../components/SectionGrid";
 import CarCard_lightbox_new from "../../components/CarCard_lightbox_new";
 
-
 export default function NewCars() {
   const [data, setData] = useState([]); // State to store all car data
   const [cars, setCars] = useState([]); // State to store loaded cars
@@ -24,7 +23,8 @@ export default function NewCars() {
   const [activeFilter, setActiveFilter] = useState(null); // State to track the active filter
   const [expandedCategory, setExpandedCategory] = useState([]); // State to track the expanded category
   const [latestDeals, setLatestDeals] = useState([]); // State to store latest deals with images
-  const filterCategories = ['Price', 'Make', 'Gearbox', 'Engine'];
+  const [filtered, setFiltered] = useState(false); // State to track if cars are filtered
+  const filterCategories = ["Price", "Make", "Gearbox", "Engine"];
 
   const calculateCardsToDisplay = () => {
     const galleryWidth = window.innerWidth; // Width of the screen
@@ -104,15 +104,17 @@ export default function NewCars() {
   // Function to load more cars when scrolling
   const loadMoreCars = useCallback(() => {
     
-    if (!isLoading && hasMore) {
+    if (!isLoading && hasMore && !filtered) {
+      // Prevent loading more cars if filtered is true
       setPage((prevPage) => prevPage + 1); // Increment the page number
     }
-  }, [isLoading, hasMore]);
+  }, [isLoading, hasMore, filtered]);
 
   // Use Effect to fetch more cars when the page changes
   useEffect(() => {
 
-    if (page > 1) {
+    if (page > 1 && !filtered) {
+      // Only fetch more cars if not filtered
       const fetchNextBatch = async () => {
         try {
           const cardsToDisplay = calculateCardsToDisplay(); // Calculate the number of cards to display
@@ -133,7 +135,7 @@ export default function NewCars() {
 
       fetchNextBatch();
     }
-  }, [page]);
+  }, [page, filtered]);
 
   // Use IntersectionObserver to detect when the user scrolls to the bottom
   useEffect(() => {
@@ -221,6 +223,49 @@ export default function NewCars() {
     setSelectedCar(null); // Clear the selected car
   };
 
+  // Function to handle applying filters
+  const handleApplyFilters = (expandedFilters) => {
+    console.log("Received Filters in NewCars:", expandedFilters); // Log the filters
+
+    const filteredCars = data.filter((car) => {
+      return Object.entries(expandedFilters).every(([category, values]) => {
+        if (!values || (Array.isArray(values) && values.length === 0)) {
+          return true; // No filter applied for this category
+        }
+
+        const carValue = car[category.toLowerCase()]; // Assuming car object keys are lowercase
+
+        // Handle range filters (e.g., price, mileage)
+        if (typeof values === "object" && values.min !== undefined && values.max !== undefined) {
+          return carValue >= values.min && carValue <= values.max;
+        }
+
+        // Handle other filters (e.g., make, gearbox)
+        if (Array.isArray(values)) {
+          return values.includes(carValue);
+        }
+
+        // Default case: exact match
+        return carValue === values;
+      });
+    });
+
+    setCars(filteredCars); // Update the cars state with filtered cars
+    setFiltered(true); // Set the filtered state to true
+    console.log("Filtered Cars:", filteredCars); // Log the filtered cars
+    
+  };
+
+  const handleCloseGallery = () => {
+    setShowGallery(false);
+    setCars([]); // Clear loaded cars
+    setPage(1); // Reset page number
+    setHasMore(true); // Reset hasMore
+    setFiltered(false); // Reset filtered state
+    setActiveFilter(null); // Reset active filter
+    setExpandedCategory([]); // Reset expanded categories
+  }
+
   return (
     <Layout>
       {/* Main Content */}
@@ -259,7 +304,7 @@ export default function NewCars() {
           {/* Close Button */}
           <button
             className="absolute right-4 bg-red-500 hover:bg-red-600 text-white w-8 h-8 rounded flex items-center justify-center shadow-lg transition-all cursor-pointer z-20"
-            onClick={() => setShowGallery(false)} // Close the gallery
+            onClick={handleCloseGallery} // Close the gallery
           >
             ✕
           </button>
@@ -286,6 +331,7 @@ export default function NewCars() {
         setExpandedCategory={setExpandedCategory}
         data={data}
         filters={filterCategories}
+        onApplyFilters={handleApplyFilters} // Pass the callback to FilterPopup
       />
     </Layout>
   );

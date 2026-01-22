@@ -1,7 +1,7 @@
 import React from "react";
-import CarCard_new from "./CarCard_new";
 
 const Gallery = ({ ComponentCard, cars, totalCars, handleCardClick, isLoading }) => {
+  
   return (
     <div className="p-8 h-[80vh] overflow-y-auto -mt-8" id="scrollable-gallery">
       <h1 className="text-3xl font-bold mb-8 mt-6">Available Cars</h1>
