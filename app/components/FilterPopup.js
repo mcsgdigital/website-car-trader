@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+
+import React, { useEffect } from "react";
 import FilterType_range from "./filter/FilterType_range";
 import FilterType_list from "./filter/FilterType_list";
 import FilterType_boolean from "./filter/FilterType_boolean";
@@ -11,6 +13,20 @@ const FilterPopup = ({
   data,
   filters,
 }) => {
+  // Disable background scrolling when the popup is open
+  useEffect(() => {
+    if (activeFilter) {
+      document.body.style.overflow = "hidden"; // Disable scrolling
+    } else {
+      document.body.style.overflow = ""; // Re-enable scrolling
+    }
+
+    // Cleanup on unmount
+    return () => {
+      document.body.style.overflow = ""; // Ensure scrolling is re-enabled
+    };
+  }, [activeFilter]);
+
   if (!activeFilter) return null; // Don't render if no active filter
 
   // Extract unique makes from the data
@@ -32,7 +48,7 @@ const FilterPopup = ({
         content = <FilterType_list list={uniqueEngines} listName={status} unitName={"L"} />;
         break;
       case "Gearbox":
-        content = <FilterType_boolean valueA={"Automatic"} valueB={"Manual"} boolName={status} />;
+        content = <FilterType_boolean valueA={"Manual"} valueB={"Automatic"} boolName={status} />;
         break;
       case "Price":
       case "Mileage":
