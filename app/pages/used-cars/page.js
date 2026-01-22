@@ -18,7 +18,7 @@ export default function UsedCars() {
   const [isLoading, setIsLoading] = useState(false); // State to track loading status
   const [hasMore, setHasMore] = useState(true); // State to track if more cars are available
   const [activeFilter, setActiveFilter] = useState(null); // State to track the active filter
-  const [expandedCategory, setExpandedCategory] = useState(null); // State to track the expanded category
+  const [expandedCategory, setExpandedCategory] = useState([]); // State to track the expanded category
   const [latestDeals, setLatestDeals] = useState([]); // State to store latest deals with images
   const filterCategories = ['Price', 'Mileage', 'Make', 'Gearbox', 'Year', 'Engine'];
 
@@ -188,7 +188,7 @@ export default function UsedCars() {
 
   useEffect(() => {
     if (activeFilter) {
-      setExpandedCategory(activeFilter); // Automatically expand the matching category
+      setExpandedCategory([activeFilter]); // Automatically expand the matching category
     }
   }, [activeFilter]);
 
@@ -241,10 +241,6 @@ export default function UsedCars() {
   // Function to close the lightbox
   const closeLightbox = () => {
     setSelectedCar(null); // Clear the selected car
-  };
-
-  const toggleCategory = (category) => {
-    setExpandedCategory((prev) => (prev === category ? null : category)); // Toggle the category
   };
 
   return (
@@ -326,7 +322,6 @@ export default function UsedCars() {
         setActiveFilter={setActiveFilter}
         expandedCategory={expandedCategory}
         setExpandedCategory={setExpandedCategory}
-        toggleCategory={toggleCategory}
         data={cars}
         filters={filterCategories}
       />

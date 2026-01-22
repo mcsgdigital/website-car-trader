@@ -3,56 +3,59 @@ import FilterType_range from "./filter/FilterType_range";
 import FilterType_list from "./filter/FilterType_list";
 import FilterType_boolean from "./filter/FilterType_boolean";
 
-
 const FilterPopup = ({
   activeFilter,
   setActiveFilter,
   expandedCategory,
   setExpandedCategory,
-  toggleCategory,
   data,
   filters,
 }) => {
   if (!activeFilter) return null; // Don't render if no active filter
 
-  console.log("FilterPopup data:", data); // Debugging log
-  console.log("FilterPopup filters:", filters); // Debugging log
-  
-
   // Extract unique makes from the data
   const uniqueMakes = [...new Set(data.map((car) => car.make))];
-  // order the makes alphabetically
-  uniqueMakes.sort();
+  uniqueMakes.sort(); // Order the makes alphabetically
 
-  // Extract unique makes from the data
+  // Extract unique engines from the data
   const uniqueEngines = [...new Set(data.map((car) => car.engine))];
-  // order the makes alphabetically
-  uniqueEngines.sort();
+  uniqueEngines.sort(); // Order the engines alphabetically
 
   function filterGroup({ status }) {
     let content;
-  
+
     switch (status) {
-      case 'Make':
-        content = <FilterType_list list={uniqueMakes} listName={status}/>;
+      case "Make":
+        content = <FilterType_list list={uniqueMakes} listName={status} />;
         break;
-      case 'Engine':
-        content = <FilterType_list list={uniqueEngines} listName={status} unitName={"L"}/>;
+      case "Engine":
+        content = <FilterType_list list={uniqueEngines} listName={status} unitName={"L"} />;
         break;
-      case 'Gearbox':
-        content = <FilterType_boolean valueA={"Automatic"} valueB={"Manual"} boolName={status}/>;
+      case "Gearbox":
+        content = <FilterType_boolean valueA={"Automatic"} valueB={"Manual"} boolName={status} />;
         break;
-      case 'Price':
-      case 'Mileage':
-      case 'Year':
+      case "Price":
+      case "Mileage":
+      case "Year":
         content = <FilterType_range />;
         break;
       default:
         content = <FilterType_range />;
     }
-  
+
     return content;
   }
+
+  // Updated toggleCategory to allow multiple categories to remain expanded
+  const handleToggleCategory = (category) => {
+    if (expandedCategory.includes(category)) {
+      // Remove the category from the expanded list
+      setExpandedCategory(expandedCategory.filter((cat) => cat !== category));
+    } else {
+      // Add the category to the expanded list
+      setExpandedCategory([...expandedCategory, category]);
+    }
+  };
 
   return (
     <div
@@ -65,7 +68,7 @@ const FilterPopup = ({
           className="absolute top-4 right-4 text-gray-500 hover:text-gray-800 cursor-pointer"
           onClick={() => {
             setActiveFilter(null); // Close the lightbox
-            setExpandedCategory(null); // Reset expanded category
+            setExpandedCategory([]); // Reset expanded categories
           }}
         >
           ✕
@@ -80,24 +83,24 @@ const FilterPopup = ({
             <div
               key={index}
               className={`border-b border-gray-200 pb-4 ${
-                expandedCategory === category ? "bg-gray-100" : "" // Apply light gray background if expanded
+                expandedCategory.includes(category) ? "bg-gray-100" : "" // Apply light gray background if expanded
               }`}
             >
               {/* Category Header */}
               <div
                 className={`flex justify-between items-center cursor-pointer p-2 rounded ${
-                  expandedCategory === category ? "bg-green-500 text-white" : "bg-transparent"
+                  expandedCategory.includes(category) ? "bg-green-500 text-white" : "bg-transparent"
                 }`} // Green background and white text for expanded category
-                onClick={() => toggleCategory(category)} // Toggle the category
+                onClick={() => handleToggleCategory(category)} // Toggle the category
               >
                 <label className="block text-lg font-medium">{category}</label>
                 <span className="text-gray-200">
-                  {expandedCategory === category ? "▲" : "▼"} {/* Arrow indicator */}
+                  {expandedCategory.includes(category) ? "▲" : "▼"} {/* Arrow indicator */}
                 </span>
               </div>
 
               {/* Category Content */}
-              {expandedCategory === category && (
+              {expandedCategory.includes(category) && (
                 <div className="mt-4">
                   {
                     // Render appropriate filter type based on category
@@ -115,7 +118,6 @@ const FilterPopup = ({
             className="bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600"
             onClick={() => {
               setActiveFilter(null); // Close the lightbox
-              console.log("Search triggered"); // Debugging log
             }}
           >
             Search
