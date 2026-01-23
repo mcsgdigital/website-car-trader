@@ -225,11 +225,10 @@ export default function NewCars() {
 
   // Function to handle applying filters
   const handleApplyFilters = (expandedFilters) => {
-    console.log("Received Filters in NewCars:", expandedFilters); // Log the filters
 
     const filteredCars = data.filter((car) => {
       return Object.entries(expandedFilters).every(([category, values]) => {
-        if (!values || (Array.isArray(values) && values.length === 0)) {
+        if ((Array.isArray(values) && values.length === 0)) {
           return true; // No filter applied for this category
         }
 
@@ -239,8 +238,7 @@ export default function NewCars() {
         if (typeof values === "object" && values.min !== undefined && values.max !== undefined) {
           return carValue >= values.min && carValue <= values.max;
         }
-
-        // Handle other filters (e.g., make, gearbox)
+        
         if (Array.isArray(values)) {
           return values.includes(carValue);
         }
@@ -252,7 +250,8 @@ export default function NewCars() {
 
     setCars(filteredCars); // Update the cars state with filtered cars
     setFiltered(true); // Set the filtered state to true
-    console.log("Filtered Cars:", filteredCars); // Log the filtered cars
+    // console.log("Filtered Cars:", filteredCars); // Log the filtered cars
+    setTotalCars(filteredCars.length); // Update total cars count
     
   };
 
@@ -263,6 +262,15 @@ export default function NewCars() {
     setHasMore(true); // Reset hasMore
     setFiltered(false); // Reset filtered state
     setActiveFilter(null); // Reset active filter
+    setExpandedCategory([]); // Reset expanded categories
+  }
+
+  const resetFilterPopup = (filter = null) => {
+    if (filter) {
+      setActiveFilter(filter); // Set active filter if provided
+    } else {
+      setActiveFilter(null); // Reset active filter
+    }
     setExpandedCategory([]); // Reset expanded categories
   }
 
@@ -308,7 +316,11 @@ export default function NewCars() {
           >
             ✕
           </button>
-          <FilterBar categories={filterCategories} activeFilter={activeFilter} setActiveFilter={setActiveFilter} />
+          <FilterBar 
+            categories={filterCategories} 
+            activeFilter={activeFilter} 
+            setActiveFilter={setActiveFilter} 
+          />
           <Gallery
             ComponentCard={CarCard_new}
             cars={cars}

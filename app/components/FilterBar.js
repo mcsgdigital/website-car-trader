@@ -1,6 +1,6 @@
 import React from "react";
 
-const FilterBar = ({ activeFilter, setActiveFilter, categories }) => {
+const FilterBar = ({ categories, activeFilter, setActiveFilter }) => {
   return (
     <div className="sticky top-0 z-10 px-6 py-3 mx-auto w-fit flex gap-4 items-center md:bg-green-500 md:text-white md:shadow-md md:rounded-full">
       {/* Single Filter Button for Mobile View */}

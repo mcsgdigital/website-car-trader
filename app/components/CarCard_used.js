@@ -24,7 +24,7 @@ export default function CarCard_used({handleCardClick, car}) {
                 <p className="text-black-600">£{car.price}</p>
                 <p className="text-sm text-gray-600">Mileage: {car.mileage.toLocaleString()} miles</p>
                 <p className="text-sm text-gray-600">Year: {car.year}</p>
-                <p className="text-sm text-gray-600">Engine: {car.enginesize}L</p>
+                <p className="text-sm text-gray-600">Engine: {car.engine}L</p>
                 <p className="text-sm text-gray-600">Gearbox: {car.gearbox ? "Manual" : "Automatic"}</p>
                 <p className="text-sm text-gray-600">Location: {car.city}</p>
             </div>

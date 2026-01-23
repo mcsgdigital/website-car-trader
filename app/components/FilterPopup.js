@@ -112,17 +112,16 @@ export default function FilterPopup({
     // Collect all selected filters for expanded categories
     const expandedFilters = {};
     expandedCategory.forEach((category) => {
-      if (selectedFilters[category]) {
+      if (selectedFilters.hasOwnProperty(category)) {
         expandedFilters[category] = selectedFilters[category];
       }
     });
 
-    // Send expandedFilters to NewCars via the callback
+    // Send expandedFilters to NewCars or UsedCars via the callback
     onApplyFilters(expandedFilters);
 
     setActiveFilter(null); // Close the popup
     setExpandedCategory([]); // Reset expanded categories
-    setSelectedFilters({}); // Reset selected filters
   };
 
   return (

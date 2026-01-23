@@ -10,7 +10,8 @@ import Layout from "../../components/Layout";
 import CarCard_lightbox_used from "../../components/CarCard_lightbox_used";
 
 export default function UsedCars() {
-  const [cars, setCars] = useState([]); // State to store loaded cars
+  const [data, setData] = useState([]); // State to store all car data
+  const [cars, setCars] = useState([]); // State to store filtered or loaded cars
   const [totalCars, setTotalCars] = useState(0); // State to store the total number of cars
   const [showGallery, setShowGallery] = useState(false); // State to toggle between hero and gallery
   const [selectedCar, setSelectedCar] = useState(null); // State to store the selected car for the lightbox
@@ -18,9 +19,10 @@ export default function UsedCars() {
   const [isLoading, setIsLoading] = useState(false); // State to track loading status
   const [hasMore, setHasMore] = useState(true); // State to track if more cars are available
   const [activeFilter, setActiveFilter] = useState(null); // State to track the active filter
-  const [expandedCategory, setExpandedCategory] = useState([]); // State to track the expanded category
+  const [expandedCategory, setExpandedCategory] = useState([]); // State to track expanded categories
   const [latestDeals, setLatestDeals] = useState([]); // State to store latest deals with images
-  const filterCategories = ['Price', 'Mileage', 'Make', 'Gearbox', 'Year', 'Engine'];
+  const [filtered, setFiltered] = useState(false); // State to track if cars are filtered
+  const filterCategories = ["Make", "Engine", "Gearbox", "Price", "Mileage", "Year"]; // Filter categories
 
   const calculateCardsToDisplay = () => {
     const galleryWidth = window.innerWidth; // Width of the screen
@@ -39,13 +41,13 @@ export default function UsedCars() {
     e.preventDefault(); // Prevent form submission
     try {
       const response = await fetch("/mock_used.json"); // Load JSON from public folder
-      const data = await response.json();
+      const result = await response.json();
       
-
-      setTotalCars(data.length); // Set the total number of cars
+      setData(result); // Store all car data
+      setTotalCars(result.length); // Set the total number of cars
 
       const cardsToDisplay = calculateCardsToDisplay(); // Calculate the number of cards to display
-      const initialCars = data.slice(0, cardsToDisplay); // Get the required number of cars
+      const initialCars = result.slice(0, cardsToDisplay); // Get the required number of cars
       const carsWithImages = await fetchInitialImages(initialCars); // Fetch images for the cars
       setCars(carsWithImages); // Display the cars with images
       setShowGallery(true); // Show the gallery
@@ -124,15 +126,15 @@ export default function UsedCars() {
   // Function to load more cars when scrolling
   const loadMoreCars = useCallback(() => {
     
-    if (!isLoading && hasMore) {
+    if (!isLoading && hasMore && !filtered) {
       setPage((prevPage) => prevPage + 1); // Increment the page number
     }
-  }, [isLoading, hasMore]);
+  }, [isLoading, hasMore, filtered]);
 
   // Use Effect to fetch more cars when the page changes
   useEffect(() => {
 
-    if (page > 1) {
+    if (page > 1 && !filtered) {
       const fetchNextBatch = async () => {
         try {
           const response = await fetch("/mock_used.json"); // Load JSON from public folder
@@ -156,7 +158,7 @@ export default function UsedCars() {
 
       fetchNextBatch();
     }
-  }, [page]);
+  }, [page, filtered]);
 
   // Use IntersectionObserver to detect when the user scrolls to the bottom
   useEffect(() => {
@@ -243,6 +245,78 @@ export default function UsedCars() {
     setSelectedCar(null); // Clear the selected car
   };
 
+  // Function to fetch Unsplash images and replace car images
+  const getImages = async (data, page, replace = false) => {
+    try {
+      const unsplashResponse = await fetch(
+        `https://api.unsplash.com/search/photos?query=cars&per_page=10&page=${page}`,
+        {
+          headers: {
+            Authorization: `Client-ID ${process.env.NEXT_PUBLIC_UNSPLASH_KEY}`,
+          },
+        }
+      );
+      const unsplashData = await unsplashResponse.json();
+
+      const newCars = data.map((car, index) => {
+        if (unsplashData.results[index]) {
+          return {
+            ...car,
+            image: unsplashData.results[index].urls.small, // Add Unsplash image
+          };
+        }
+        return car;
+      });
+
+      if (replace) {
+        setCars(newCars); // Replace the cars state with the new cars
+      } else {
+        setCars((prevCars) => [...prevCars, ...newCars]); // Append new cars
+      }
+    } catch (error) {
+      console.error("Error fetching images:", error);
+    }
+  };
+
+  // Function to handle applying filters
+  const handleApplyFilters = async (expandedFilters) => {
+
+    // Filter the cars based on the expandedFilters
+    const filteredCars = data.filter((car) => {
+      return Object.entries(expandedFilters).every(([category, values]) => {
+        if ((Array.isArray(values) && values.length === 0)) {
+          return true; // No filter applied for this category
+        }
+
+        const carValue = car[category.toLowerCase()]; // Assuming car object keys are lowercase
+
+        // Handle range filters (e.g., price, mileage)
+        if (typeof values === "object" && values.min !== undefined && values.max !== undefined) {
+          return carValue >= values.min && carValue <= values.max;
+        }
+
+        // Handle other filters (e.g., make, gearbox)
+        if (Array.isArray(values)) {
+          return values.includes(carValue);
+        }
+
+        // Default case: exact match
+        return carValue === values;
+      });
+    });
+
+    // console.log("Filtered Cars (before adding images):", filteredCars);
+    setTotalCars(filteredCars.length); // Update total cars count
+
+    // Add images to the filtered cars and replace the cars state
+    try {
+      await getImages(filteredCars, 1, true); // Pass replace = true to replace the cars state
+      setFiltered(true); // Set the filtered state to true
+    } catch (error) {
+      console.error("Error adding images to filtered cars:", error);
+    }
+  };
+
   return (
     <Layout>
       {/* Main Content */}
@@ -322,8 +396,9 @@ export default function UsedCars() {
         setActiveFilter={setActiveFilter}
         expandedCategory={expandedCategory}
         setExpandedCategory={setExpandedCategory}
-        data={cars}
-        filters={filterCategories}
+        data={data} // Pass the full dataset
+        filters={filterCategories} // Pass filter categories
+        onApplyFilters={handleApplyFilters} // Pass the callback to handle filtering
       />
     </Layout>
   );
