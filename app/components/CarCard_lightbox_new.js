@@ -33,21 +33,21 @@ export default function CarCard_lightbox_new({ car, closeLightbox }) {
                   <p className="text-gray-600">Pick-up: {car.distance} miles</p>
                 </div>
                 <div className="mb-4 p-4 bg-gray-50 rounded-lg shadow-sm">
-                  <h2 className="text-xl font-bold">
+                  <h2 className="text-xl font-bold dark:text-black">
                     {car.make} {car.model}
                   </h2>
                   <p className="text-gray-600">Price: £{car.price}</p>
                   <p className="text-gray-600">Saving: £{car.saving}</p>
                 </div>
                 <div className="mb-4 p-4 bg-gray-50 rounded-lg shadow-sm">
-                  <h3 className="text-lg font-bold">Overview</h3>
-                  <p>Gearbox: {car.gearbox ? "Manual" : "Automatic"}</p>
-                  <p>Doors: {car.doors}</p>
-                  <p>Engine: {car.engine}L</p>
+                  <h3 className="text-lg font-bold dark:text-gray-400">Overview</h3>
+                  <p className="text-gray-600">Gearbox: {car.gearbox ? "Manual" : "Automatic"}</p>
+                  <p className="text-gray-600">Doors: {car.doors}</p>
+                  <p className="text-gray-600">Engine: {car.engine}L</p>
                 </div>
                 <div className="p-4 bg-gray-50 rounded-lg shadow-sm">
-                  <h3 className="text-lg font-bold">Description</h3>
-                  <p>
+                  <h3 className="text-lg font-bold dark:text-gray-400">Description</h3>
+                  <p className="text-gray-600">
                     This is a high-quality car with excellent features, perfect for your needs.
                   </p>
                 </div>

@@ -1,7 +1,7 @@
-export default function SectionDeal({ title, description, data }) {
+export default function SectionDeal_new({ title, description, data }) {
     return (
         <section className="bg-gray-100 py-16 mt-20 rounded-lg">
-            <h2 className="text-3xl font-bold text-center mb-12">{title}</h2>
+            <h2 className="text-3xl font-bold text-center mb-12 dark:text-black">{title}</h2>
             <p className="text-center text-gray-600 mb-12">
               {description}
             </p>
@@ -44,7 +44,7 @@ export default function SectionDeal({ title, description, data }) {
 
                     <hr className="border-t border-gray-200 my-4" />
 
-                    <h3 className="text-lg font-bold mb-2">{car.makeModel}</h3>
+                    <h3 className="text-lg font-bold mb-2 dark:text-black">{car.makeModel}</h3>
                     <p className="text-gray-600">{car.spec}</p>
                   </div>
                 </div>

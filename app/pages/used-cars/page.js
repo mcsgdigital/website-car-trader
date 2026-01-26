@@ -8,6 +8,7 @@ import FilterPopup from "../../components/FilterPopup";
 import CarCard_used from "../../components/CarCard_used";
 import Layout from "../../components/Layout";
 import CarCard_lightbox_used from "../../components/CarCard_lightbox_used";
+import SectionDeal_used from "../../components/SectionDeal_used";
 
 export default function UsedCars() {
   const [data, setData] = useState([]); // State to store all car data
@@ -331,38 +332,11 @@ export default function UsedCars() {
           />
 
           {/* Latest Deals Section */}
-          <section className="bg-gray-100 py-8 mt-20 rounded-lg">
-            <h2 className="text-3xl font-bold text-left mb-2 ml-5">Explore Our Collection</h2>
-            <p className="text-left text-gray-600 mb-6 ml-5">
-            Browse through a wide range of high-quality used cars.
-            </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 2xl:grid-cols-4 gap-8 px-4">
-              {latestDeals.map((deal) => (
-                <div
-                  key={deal.id}
-                  className="bg-white shadow-lg rounded-lg overflow-hidden cursor-pointer"
-                >
-                  <img
-                    src={deal.image}
-                    alt={deal.make + " " + deal.model}
-                    className="w-full h-48 object-cover"
-                  />
-                  <div className="p-4">
-                    <h3 className="text-lg font-bold mb-2">{deal.makeModel}</h3>
-                    <p className="text-xl text-green-600 font-bold mb-2">
-                    £{Number(deal.price.replace(/[^0-9.-]+/g, "")).toLocaleString()}
-                    </p>
-                    <p className="text-sm text-gray-600">Year: {deal.year}</p>
-                    <p className="text-sm text-gray-600">Mileage: {deal.mileage} miles</p>
-                    <p className="text-sm text-gray-600">Engine: {deal.enginesize}L</p>
-                    <button className="mt-4 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition-all">
-                      View Details
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </section>
+          <SectionDeal_used
+            data={latestDeals}
+            title="Explore Our Collection"
+            description="Browse through a wide range of high-quality used cars."
+          />
         </>
       ) : (
         // If showGallery is true, display the Gallery

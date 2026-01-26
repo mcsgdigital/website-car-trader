@@ -12,7 +12,7 @@ export default function CarCard_new({handleCardClick, car}) {
         />
         <div className="p-4 flex flex-col justify-between flex-1">
             <div>
-            <h2 className="text-xl font-bold mb-2">
+            <h2 className="text-xl font-bold mb-2 dark:text-black">
                 {car.make} {car.model}
             </h2>
             <p className="text-gray-600">{car.instock && "IN STOCK"}</p>
@@ -22,7 +22,7 @@ export default function CarCard_new({handleCardClick, car}) {
                 Save £{car.saving}{" "}
                 <span className="text-red-600 text-sm">£{car.price + car.saving}</span>
             </p>
-            <p className="text-black-600">£{car.price}</p>
+            <p className="text-black-600 dark:text-black">£{car.price}</p>
             <p className="text-gray-600">Distance: {car.distance} miles</p>
             </div>
         </div>

@@ -13,7 +13,7 @@ export default function CarCard_used({handleCardClick, car}) {
           <div className="p-4 flex flex-col justify-between flex-1">
             {/* Car Details */}
             <div>
-                <h2 className="text-xl font-bold mb-2">
+                <h2 className="text-xl font-bold mb-2 dark:text-black">
                 {car.make} {car.model}
                 </h2>
                 <p className="text-gray-600">{car.instock && "IN STOCK"}</p>
@@ -21,7 +21,7 @@ export default function CarCard_used({handleCardClick, car}) {
 
             {/* Bottom Section */}
             <div className="mt-auto">
-                <p className="text-black-600">£{car.price}</p>
+                <p className="text-black-600 dark:text-black">£{car.price}</p>
                 <p className="text-sm text-gray-600">Mileage: {car.mileage.toLocaleString()} miles</p>
                 <p className="text-sm text-gray-600">Year: {car.year}</p>
                 <p className="text-sm text-gray-600">Engine: {car.engine}L</p>

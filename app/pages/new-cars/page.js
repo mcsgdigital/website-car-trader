@@ -7,9 +7,10 @@ import FilterBar from "../../components/FilterBar";
 import Gallery from "../../components/Gallery";
 import CarCard_new from "../../components/CarCard_new";
 import FilterPopup from "../../components/FilterPopup";
-import SectionDeal from "../../components/SectionDeal";
+import SectionDeal_new from "../../components/SectionDeal_new";
 import SectionGrid from "../../components/SectionGrid";
 import CarCard_lightbox_new from "../../components/CarCard_lightbox_new";
+
 
 export default function NewCars() {
   const [data, setData] = useState([]); // State to store all car data
@@ -288,7 +289,7 @@ export default function NewCars() {
           />
 
           {/* Latest Deals Section */}
-          <SectionDeal
+          <SectionDeal_new
             data={latestDeals}
             title="Latest Deals"
             description="Discover our handpicked deals on the latest cars with flexible contracts and affordable prices."

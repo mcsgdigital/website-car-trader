@@ -2,12 +2,12 @@
 
 export default function SectionGrid( props ) {
     return (
-        <section className="bg-gray-100 py-16 mt-20 rounded-lg">
+        <section className="bg-gray-100 py-16 mt-20 mb-16 rounded-lg">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 px-4">
               {/* Top Left Block */}
               <div className="flex flex-col justify-start">
                 <div className="w-[70%] m-auto">
-                  <h3 className="text-2xl font-bold mb-4">{props.titleA}</h3>
+                  <h3 className="text-2xl font-bold mb-4 dark:text-black">{props.titleA}</h3>
                   <p className="text-gray-600 mb-4">
                     {props.descriptionA}
                   </p>
@@ -38,7 +38,7 @@ export default function SectionGrid( props ) {
               {/* Bottom Right Block */}
               <div className="flex flex-col justify-start">
                 <div className="w-[70%] m-auto">
-                  <h3 className="text-2xl font-bold mb-4">{props.titleB}</h3>
+                  <h3 className="text-2xl font-bold mb-4 dark:text-black">{props.titleB}</h3>
                   <p className="text-gray-600 mb-4">
                     {props.descriptionB}
                   </p>

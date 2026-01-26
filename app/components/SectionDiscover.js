@@ -1,6 +1,6 @@
 export default function SectionDiscover() {
     return (
-        <>
+        <div className="mb-16">
             <h2 className="text-center text-3xl font-bold mt-16 mb-8">
                 Discover more from Car Traders
             </h2>
@@ -13,7 +13,7 @@ export default function SectionDiscover() {
                         className="w-full h-48 object-cover"
                     />
                     <div className="p-4">
-                        <h3 className="text-xl font-bold mb-2">
+                        <h3 className="text-xl font-bold mb-2 dark:text-black">
                             Premium Car Services
                         </h3>
                         <p className="text-gray-600 mb-4">
@@ -34,7 +34,7 @@ export default function SectionDiscover() {
                         className="w-full h-48 object-cover"
                     />
                     <div className="p-4">
-                        <h3 className="text-xl font-bold mb-2">
+                        <h3 className="text-xl font-bold mb-2 dark:text-black">
                             Car Financing
                         </h3>
                         <p className="text-gray-600 mb-4">
@@ -55,7 +55,7 @@ export default function SectionDiscover() {
                         className="w-full h-48 object-cover"
                     />
                     <div className="p-4">
-                        <h3 className="text-xl font-bold mb-2">
+                        <h3 className="text-xl font-bold mb-2 dark:text-black">
                             Trade-In Offers
                         </h3>
                         <p className="text-gray-600 mb-4">
@@ -67,6 +67,6 @@ export default function SectionDiscover() {
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     );
 }
