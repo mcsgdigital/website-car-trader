@@ -14,14 +14,19 @@ export default function Navbar() {
   const [email, setEmail] = useState(""); // Tracks the entered email
   const [password, setPassword] = useState(""); // Tracks the entered password
   const [errorMessage, setErrorMessage] = useState(""); // Tracks the error message
-  const [isSignedIn, setIsSignedIn] = useState(false); // Tracks if the user is signed in
-  const [staySignedIn, setStaySignedIn] = useState(false); // Tracks the "Stay signed in" checkbox
+  const [isSignedIn, setIsSignedIn] = useState(false); // Default to false
+  const [staySignedIn, setStaySignedIn] = useState(false); // Default to false
+  const [isMounted, setIsMounted] = useState(false); // Tracks if the component has mounted
 
-  // Check localStorage for "staySignedIn" on component mount
   useEffect(() => {
+    // Set the mounted state to true after the component has mounted
+    setIsMounted(true);
+
+    // Check if the user is signed in when the component mounts
     const storedSignedIn = localStorage.getItem("staySignedIn");
     if (storedSignedIn === "true") {
       setIsSignedIn(true);
+      setStaySignedIn(true);
     }
   }, []);
 
@@ -38,6 +43,18 @@ export default function Navbar() {
   };
 
   const handleContinue = () => {
+    // Validate the email address
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      console.log("Invalid email:", email);
+      
+      setErrorMessage("Please enter a valid email address.");
+      return;
+    }
+
+    // Clear any previous error messages
+    setErrorMessage("");
+
     if (panelState === "signIn") {
       // Check if the email exists in localStorage
       const storedPassword = localStorage.getItem(email);
@@ -152,20 +169,25 @@ export default function Navbar() {
           >
             Sell Car
           </Link>
-          {isSignedIn ? (
-            <button
-              className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded transition-all"
-              onClick={handleLogOut} // Log out the user
-            >
-              Log Out
-            </button>
-          ) : (
-            <button
-              className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded transition-all"
-              onClick={() => setIsSignInOpen(true)} // Open the Sign In panel
-            >
-              Sign In
-            </button>
+          {/* Defer rendering until the component has mounted */}
+          {isMounted && (
+            <>
+              {isSignedIn ? (
+                <button
+                  className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded transition-all"
+                  onClick={handleLogOut} // Log out the user
+                >
+                  Log Out
+                </button>
+              ) : (
+                <button
+                  className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded transition-all"
+                  onClick={() => setIsSignInOpen(true)} // Open the Sign In panel
+                >
+                  Sign In
+                </button>
+              )}
+            </>
           )}
         </div>
       </nav>
@@ -242,9 +264,9 @@ export default function Navbar() {
 
       {/* Sign In Panel */}
       <div
-        className={`fixed top-0 right-0 h-full w-96 bg-white shadow-lg transform ${
+        className={`fixed top-0 right-0 h-full w-96 bg-gray-300 shadow-lg transform ${
           isSignInOpen ? "translate-x-0" : "translate-x-full"
-        } transition-transform duration-300 z-50`}
+        } transition-transform duration-300 z-50 dark:bg-white`}
       >
         <div className="p-6 relative">
           {/* Close Button */}
@@ -265,11 +287,14 @@ export default function Navbar() {
               </label>
               <input
                 type="email"
-                className="w-full p-2 border border-gray-300 rounded mb-4 dark:text-gray-500"
+                className="w-full p-2 border border-gray-800 rounded mb-4 dark:text-gray-500 boder-gray-300"
                 placeholder="Enter your email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
+              {errorMessage && (
+                <p className="text-red-500 text-sm mb-4">{errorMessage}</p>
+              )}
               <button
                 className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded w-full"
                 onClick={handleContinue} // Check email and update panel state
@@ -290,7 +315,7 @@ export default function Navbar() {
               </label>
               <input
                 type="password"
-                className="w-full p-2 border border-gray-300 rounded mb-4 dark:text-gray-500"
+                className="w-full p-2 border border-gray-800 rounded mb-4 dark:text-gray-500 boder-gray-300"
                 placeholder="Enter your password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -329,7 +354,7 @@ export default function Navbar() {
               </label>
               <input
                 type="email"
-                className="w-full p-2 border border-gray-300 rounded mb-4 dark:text-gray-500"
+                className="w-full p-2 border border-gray-800 rounded mb-4 dark:text-gray-500 boder-gray-300"
                 placeholder="Enter your email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -339,7 +364,7 @@ export default function Navbar() {
               </label>
               <input
                 type="password"
-                className="w-full p-2 border border-gray-300 rounded mb-4 dark:text-gray-500"
+                className="w-full p-2 border border-gray-800 rounded mb-4 dark:text-gray-500 boder-gray-300"
                 placeholder="Create a password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
