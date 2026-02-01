@@ -1,7 +1,7 @@
 :HL["/website-car-trader/_next/static/chunks/f38a1899de39d2a2.css","style"]
 :HL["https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css","style"]
-:HL["/images/home-hero-logo.png","image"]
-:HL["/images/service-1.jpg","image"]
-:HL["/images/service-2.jpg","image"]
-:HL["/images/service-3.jpg","image"]
-0:{"buildId":"Ampcch_vW0K7hiedihwB-","tree":{"name":"","paramType":null,"paramKey":"","hasRuntimePrefetch":false,"slots":{"children":{"name":"__PAGE__","paramType":null,"paramKey":"__PAGE__","hasRuntimePrefetch":false,"slots":null,"isRootLayout":false}},"isRootLayout":true},"staleTime":300}
+:HL["/website-car-trader/images/home-hero-logo.png","image"]
+:HL["/website-car-trader/images/service-1.jpg","image"]
+:HL["/website-car-trader/images/service-2.jpg","image"]
+:HL["/website-car-trader/images/service-3.jpg","image"]
+0:{"buildId":"1okGilhKppnCRGF4alMQ6","tree":{"name":"","paramType":null,"paramKey":"","hasRuntimePrefetch":false,"slots":{"children":{"name":"__PAGE__","paramType":null,"paramKey":"__PAGE__","hasRuntimePrefetch":false,"slots":null,"isRootLayout":false}},"isRootLayout":true},"staleTime":300}

@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect, useCallback } from "react";
 
+import { basePath } from "../../../next.config";
 import HeroSection from "../../components/HeroSection";
 import FilterBar from "../../components/FilterBar";
 import Gallery from "../../components/Gallery";
@@ -41,7 +42,7 @@ export default function UsedCars() {
   const handleSearch = async (e) => {
     e.preventDefault(); // Prevent form submission
     try {
-      const response = await fetch("/mock_used.json"); // Load JSON from public folder
+      const response = await fetch(`${basePath}/mock_used.json`); // Load JSON from public folder
       const result = await response.json();
       
       setData(result); // Store all car data
@@ -138,7 +139,7 @@ export default function UsedCars() {
     if (page > 1 && !filtered) {
       const fetchNextBatch = async () => {
         try {
-          const response = await fetch("/mock_used.json"); // Load JSON from public folder
+          const response = await fetch(`${basePath}/mock_used.json`); // Load JSON from public folder
           const data = await response.json();
 
           const cardsToDisplay = calculateCardsToDisplay(); // Calculate the number of cards to display

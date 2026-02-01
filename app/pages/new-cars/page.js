@@ -1,4 +1,6 @@
 "use client";
+
+import { basePath } from "../../../next.config";
 import { useState, useEffect, useCallback } from "react";
 import Layout from "../../components/Layout";
 
@@ -43,7 +45,7 @@ export default function NewCars() {
   const handleSearch = async (e) => {
     e.preventDefault(); // Prevent form submission
     try {
-      const response = await fetch("/mock_new.json"); // Load JSON from public folder
+      const response = await fetch(`${basePath}/mock_new.json`); // Load JSON from public folder
       const result = await response.json();
 
       setData(result); // Store all car data
@@ -300,11 +302,11 @@ export default function NewCars() {
             titleA={"Find the best new cars"}
             descriptionA={"Explore a wide range of new cars tailored to your needs and budget."}
             buttonTextA={"Explore Now"}
-            imageSrcA={"/images/newcars-driving-down.jpg"}
+            imageSrcA={`${basePath}/images/newcars-driving-down.jpg`}
             titleB={"Buy with confidence"}
             descriptionB={"Enjoy peace of mind with trusted dealers and secure transactions."}
             buttonTextB={"Learn More"}
-            imageSrcB={"/images/newcars-keys.jpg"}
+            imageSrcB={`${basePath}/images/newcars-keys.jpg`}
           />
         </>
       ) : (

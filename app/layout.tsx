@@ -10,6 +10,8 @@ export const metadata = {
 import { ReactNode } from "react";
 
 export default function RootLayout({ children }: { children: ReactNode }) {
+    console.log("Rendering RootLayout");
+
     return (
         <html lang="en">
             <head>

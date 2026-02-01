@@ -5,8 +5,10 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import styles from "./Navbar.module.css";
+import { basePath } from "../../next.config";
 
 export default function Navbar() {
+
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSignInOpen, setIsSignInOpen] = useState(false); // State to toggle the Sign In panel
@@ -119,11 +121,12 @@ export default function Navbar() {
         {/* Logo */}
         <div className="flex items-center">
           <Image
-            src="/logo.png"
+            src={`${basePath}/logo.png`}
             alt="CarTrader Logo"
             width={240}
             height={50}
             className={styles.logo}
+            loading="eager"
           />
         </div>
 

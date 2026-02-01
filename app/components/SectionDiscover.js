@@ -1,3 +1,5 @@
+import { basePath } from "../../next.config";
+
 export default function SectionDiscover() {
     return (
         <div className="mb-16">
@@ -8,7 +10,7 @@ export default function SectionDiscover() {
                 {/* Card 1 */}
                 <div className="md:col-span-6 bg-white shadow-lg rounded-lg overflow-hidden">
                     <img
-                        src="/images/service-1.jpg"
+                        src={`${basePath}/images/service-1.jpg`}
                         alt="Service 1"
                         className="w-full h-48 object-cover"
                     />
@@ -29,7 +31,7 @@ export default function SectionDiscover() {
                 {/* Card 2 */}
                 <div className="md:col-span-3 bg-white shadow-lg rounded-lg overflow-hidden">
                     <img
-                        src="/images/service-2.jpg"
+                        src={`${basePath}/images/service-2.jpg`}
                         alt="Service 2"
                         className="w-full h-48 object-cover"
                     />
@@ -50,7 +52,7 @@ export default function SectionDiscover() {
                 {/* Card 3 */}
                 <div className="md:col-span-3 bg-white shadow-lg rounded-lg overflow-hidden">
                     <img
-                        src="/images/service-3.jpg"
+                        src={`${basePath}/images/service-3.jpg`}
                         alt="Service 3"
                         className="w-full h-48 object-cover"
                     />
