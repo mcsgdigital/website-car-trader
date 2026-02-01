@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { basePath } from "../../next.config";
 
 export default function HeroSection_home() {
@@ -23,10 +24,13 @@ export default function HeroSection_home() {
             </div>
 
             {/* Logo Image */}
-            <img
+            <Image
                 src={`${basePath}/images/home-hero-logo.png`}
                 alt="Home Hero Logo"
                 className="absolute bottom-2 right-2 md:bottom-4 md:right-4 w-16 md:w-24 h-auto"
+                loading="eager"
+                width={96}
+                height={76}
             />
         </section>
     );

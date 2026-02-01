@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export default function CarCard_lightbox_new({ car, closeLightbox }) {
     
     return (
@@ -12,11 +14,14 @@ export default function CarCard_lightbox_new({ car, closeLightbox }) {
             </button>
 
             {/* Gallery Section */}
-            <div className="mb-8 relative">
-              <img
-                src={car.image}
-                alt={`${car.make} ${car.model}`}
-                className="w-full h-64 object-cover rounded-lg"
+            <div className="mb-8 relative w-full h-64">
+              <Image
+                  src={car.image}
+                  alt={`${car.make} ${car.model}`}
+                  className="object-cover rounded-lg shadow-lg"
+                  loading="eager"
+                  fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"  
               />
               <button
                 className="absolute bottom-4 left-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"

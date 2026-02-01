@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { basePath } from "../../next.config";
 
 export default function SectionDiscover() {
@@ -9,11 +10,16 @@ export default function SectionDiscover() {
             <div className="w-11/12 max-w-6xl grid grid-cols-1 md:grid-cols-12 gap-6 mb-8 mx-auto">
                 {/* Card 1 */}
                 <div className="md:col-span-6 bg-white shadow-lg rounded-lg overflow-hidden">
-                    <img
-                        src={`${basePath}/images/service-1.jpg`}
-                        alt="Service 1"
-                        className="w-full h-48 object-cover"
-                    />
+                    <div className="relative w-full h-48">
+                        <Image
+                            src={`${basePath}/images/service-1.jpg`}
+                            alt="Service 1"
+                            className="object-cover"
+                            loading="eager"
+                            fill
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        />
+                    </div>
                     <div className="p-4">
                         <h3 className="text-xl font-bold mb-2 dark:text-black">
                             Premium Car Services
@@ -30,11 +36,16 @@ export default function SectionDiscover() {
 
                 {/* Card 2 */}
                 <div className="md:col-span-3 bg-white shadow-lg rounded-lg overflow-hidden">
-                    <img
-                        src={`${basePath}/images/service-2.jpg`}
-                        alt="Service 2"
-                        className="w-full h-48 object-cover"
-                    />
+                    <div className="relative w-full h-48">
+                        <Image
+                            src={`${basePath}/images/service-2.jpg`}
+                            alt="Service 2"
+                            className="object-cover"
+                            loading="eager"
+                            fill
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        />
+                    </div>
                     <div className="p-4">
                         <h3 className="text-xl font-bold mb-2 dark:text-black">
                             Car Financing
@@ -51,11 +62,16 @@ export default function SectionDiscover() {
 
                 {/* Card 3 */}
                 <div className="md:col-span-3 bg-white shadow-lg rounded-lg overflow-hidden">
-                    <img
-                        src={`${basePath}/images/service-3.jpg`}
-                        alt="Service 3"
-                        className="w-full h-48 object-cover"
-                    />
+                    <div className="relative w-full h-48">
+                        <Image
+                            src={`${basePath}/images/service-3.jpg`}
+                            alt="Service 3"
+                            className="object-cover"
+                            loading="eager"
+                            fill
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        />
+                    </div>
                     <div className="p-4">
                         <h3 className="text-xl font-bold mb-2 dark:text-black">
                             Trade-In Offers

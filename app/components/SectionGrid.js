@@ -1,4 +1,5 @@
-// 2x2 grid section - top left and bottom right have text and buttons, top right and bottom left have images 
+// 2x2 grid section - top left and bottom right have text and buttons, top right and bottom left have images
+import Image from "next/image"; 
 
 export default function SectionGrid( props ) {
     return (
@@ -18,21 +19,29 @@ export default function SectionGrid( props ) {
               </div>
 
               {/* Top Right Block */}
-              <div className="relative">
-                <img
-                  src={props.imageSrcA}
-                  alt="Driving down the road"
-                  className="w-full h-full object-cover rounded-lg shadow-lg"
+              <div className="relative h-40 md:h-70">
+                <Image
+                    src={props.imageSrcA}
+                    alt="Top Right Image"
+                    className="w-full h-full rounded-lg shadow-lg object-cover"
+                    loading="eager"
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 />
               </div>
 
               {/* Bottom Left Block */}
               <div className="relative">
-                <img
-                  src={props.imageSrcB}
-                  alt="Car keys"
-                  className="w-full h-full object-cover rounded-lg shadow-lg"
-                />
+                <div className="relative h-40 md:h-70">
+                  <Image
+                      src={props.imageSrcB}
+                      alt="Bottom left image"
+                      className="w-full h-full rounded-lg shadow-lg object-cover"
+                      loading="eager"
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  />
+                </div>
               </div>
 
               {/* Bottom Right Block */}

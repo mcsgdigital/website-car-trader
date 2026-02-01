@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export default function SectionDeal_new({ title, description, data }) {
     return (
         <section className="bg-gray-100 py-16 mt-20 rounded-lg">
@@ -11,11 +13,16 @@ export default function SectionDeal_new({ title, description, data }) {
                   key={car.id}
                   className="bg-white shadow-lg rounded-lg overflow-hidden cursor-pointer"
                 >
-                  <img
-                    src={car.image}
-                    alt={car.makeModel}
-                    className="w-full h-48 object-cover"
-                  />
+                  <div className="relative w-full h-48">
+                    <Image
+                        src={car.image}
+                        alt={car.makeModel}
+                        className="object-cover"
+                        loading="eager"
+                        fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    />
+                  </div>
                   <div className="p-4">
                     <div className="flex justify-between items-center mb-4">
                       {/* Left Column: Price */}

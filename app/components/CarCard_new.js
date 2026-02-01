@@ -1,15 +1,21 @@
+import Image from "next/image";
+
 export default function CarCard_new({handleCardClick, car}) {
   return (
     <div
         className="bg-white shadow-lg rounded-lg overflow-hidden flex flex-col max-w-[300px] w-full mx-auto cursor-pointer"
         onClick={() => handleCardClick(car)}
-        >
-        <img
-            src={car.image}
-            alt={`${car.make} ${car.model}`}
-            className="w-full h-48 object-cover"
-            loading="lazy"
-        />
+    >
+        <div className="relative w-full h-48">
+            <Image
+                src={car.image}
+                alt={`${car.make} ${car.model}`}
+                className="object-cover"
+                loading="eager"
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"  
+            />
+        </div>
         <div className="p-4 flex flex-col justify-between flex-1">
             <div>
             <h2 className="text-xl font-bold mb-2 dark:text-black">
