@@ -2,7 +2,7 @@
     "name": "website-car-trader",
     "version": "0.1.0",
     "private": true,
-    "homepage": "https://mcsgdigital.github.io/website-car-trader/",
+    "homepage": "https://mcsgdigital.github.io/website-car-trader",
     "scripts": {
         "dev": "next dev",
         "build": "next build",
