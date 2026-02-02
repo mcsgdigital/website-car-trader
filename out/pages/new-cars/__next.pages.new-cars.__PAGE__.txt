@@ -1,9 +1,9 @@
 1:"$Sreact.fragment"
-2:I[47257,["/website-car-trader/_next/static/chunks/ff1a16fafef87110.js","/website-car-trader/_next/static/chunks/7340adf74ff47ec0.js"],"ClientPageRoot"]
-3:I[76596,["/website-car-trader/_next/static/chunks/fa9d05843f06e0ef.js","/website-car-trader/_next/static/chunks/827a67b77b6e37e1.js"],"default"]
-6:I[97367,["/website-car-trader/_next/static/chunks/ff1a16fafef87110.js","/website-car-trader/_next/static/chunks/7340adf74ff47ec0.js"],"OutletBoundary"]
+2:I[47257,["/website-car-trader/_next/static/chunks/ff1a16fafef87110.js","/website-car-trader/_next/static/chunks/d2be314c3ece3fbe.js"],"ClientPageRoot"]
+3:I[76596,["/website-car-trader/_next/static/chunks/ddde16a25109ddb0.js","/website-car-trader/_next/static/chunks/827a67b77b6e37e1.js"],"default"]
+6:I[97367,["/website-car-trader/_next/static/chunks/ff1a16fafef87110.js","/website-car-trader/_next/static/chunks/d2be314c3ece3fbe.js"],"OutletBoundary"]
 7:"$Sreact.suspense"
-0:{"buildId":"Srvrk7_y9FxqRxGk4u-8k","rsc":["$","$1","c",{"children":[["$","$L2",null,{"Component":"$3","serverProvidedParams":{"searchParams":{},"params":{},"promises":["$@4","$@5"]}}],[["$","script","script-0",{"src":"/website-car-trader/_next/static/chunks/827a67b77b6e37e1.js","async":true}]],["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]]}],"loading":null,"isPartial":false}
+0:{"buildId":"Dax0cTCaQ2wwK3nQ1iGqU","rsc":["$","$1","c",{"children":[["$","$L2",null,{"Component":"$3","serverProvidedParams":{"searchParams":{},"params":{},"promises":["$@4","$@5"]}}],[["$","script","script-0",{"src":"/website-car-trader/_next/static/chunks/827a67b77b6e37e1.js","async":true}]],["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]]}],"loading":null,"isPartial":false}
 4:{}
 5:{}
 8:null
