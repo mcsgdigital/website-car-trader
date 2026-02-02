@@ -3,7 +3,7 @@
 3:I[60481,["/website-car-trader/_next/static/chunks/fa9d05843f06e0ef.js","/website-car-trader/_next/static/chunks/bd4d62a231aa482e.js"],"default"]
 6:I[97367,["/website-car-trader/_next/static/chunks/ff1a16fafef87110.js","/website-car-trader/_next/static/chunks/7340adf74ff47ec0.js"],"OutletBoundary"]
 7:"$Sreact.suspense"
-0:{"buildId":"HtuVKgsCgIsWLY3xUIrBz","rsc":["$","$1","c",{"children":[["$","$L2",null,{"Component":"$3","serverProvidedParams":{"searchParams":{},"params":{},"promises":["$@4","$@5"]}}],[["$","script","script-0",{"src":"/website-car-trader/_next/static/chunks/bd4d62a231aa482e.js","async":true}]],["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]]}],"loading":null,"isPartial":false}
+0:{"buildId":"mF8-LdcIyA9RyKUdaWzz7","rsc":["$","$1","c",{"children":[["$","$L2",null,{"Component":"$3","serverProvidedParams":{"searchParams":{},"params":{},"promises":["$@4","$@5"]}}],[["$","script","script-0",{"src":"/website-car-trader/_next/static/chunks/bd4d62a231aa482e.js","async":true}]],["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]]}],"loading":null,"isPartial":false}
 4:{}
 5:{}
 8:null
