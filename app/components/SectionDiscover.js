@@ -1,7 +1,8 @@
 import Image from "next/image";
-import { basePath } from "../../next.config";
+const basePath = "/website-car-trader"; // Hardcoded basePath
 
 export default function SectionDiscover() {
+
     return (
         <div className="mb-16">
             <h2 className="text-center text-3xl font-bold mt-16 mb-8">

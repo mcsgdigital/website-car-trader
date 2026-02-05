@@ -10,5 +10,3 @@ const nextConfig: NextConfig = {
 };
 
 export default nextConfig;
-// Export basePath for use in components
-export const basePath = nextConfig.basePath || "";

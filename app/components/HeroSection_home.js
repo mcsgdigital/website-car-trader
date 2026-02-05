@@ -1,5 +1,7 @@
+"use client";
+
 import Image from "next/image";
-import { basePath } from "../../next.config";
+const basePath = "/website-car-trader"; // Hardcoded basePath
 
 export default function HeroSection_home() {
     console.log("Rendering HeroSection_home component");

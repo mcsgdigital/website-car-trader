@@ -1,6 +1,5 @@
 "use client";
 
-import { basePath } from "../../../next.config";
 import { useState, useEffect, useCallback } from "react";
 import Layout from "../../components/Layout";
 
@@ -13,6 +12,7 @@ import SectionDeal_new from "../../components/SectionDeal_new";
 import SectionGrid from "../../components/SectionGrid";
 import CarCard_lightbox_new from "../../components/CarCard_lightbox_new";
 
+const basePath = "/website-car-trader"; // Hardcoded basePath
 
 export default function NewCars() {
   const [data, setData] = useState([]); // State to store all car data
@@ -62,7 +62,6 @@ export default function NewCars() {
 
   // Function to fetch Unsplash images and replace car images
   const getImages = async (data, page) => {
-
     try {
       setIsLoading(true); // Set loading state
       const unsplashResponse = await fetch(
@@ -74,13 +73,11 @@ export default function NewCars() {
         }
       );
       const unsplashData = await unsplashResponse.json();
-      
 
       if (unsplashData.results.length === 0) {
         setHasMore(false); // No more images available
         return;
       }
-      
 
       const newCars = data.map((car, index) => {
         if (unsplashData.results[index]) {
@@ -91,7 +88,7 @@ export default function NewCars() {
         }
         return car;
       });
-      
+
       if (cars.length === 0) {
         setCars(newCars);
       } else {
@@ -106,7 +103,6 @@ export default function NewCars() {
 
   // Function to load more cars when scrolling
   const loadMoreCars = useCallback(() => {
-    
     if (!isLoading && hasMore && !filtered) {
       // Prevent loading more cars if filtered is true
       setPage((prevPage) => prevPage + 1); // Increment the page number
@@ -115,7 +111,6 @@ export default function NewCars() {
 
   // Use Effect to fetch more cars when the page changes
   useEffect(() => {
-
     if (page > 1 && !filtered) {
       // Only fetch more cars if not filtered
       const fetchNextBatch = async () => {
@@ -228,10 +223,9 @@ export default function NewCars() {
 
   // Function to handle applying filters
   const handleApplyFilters = (expandedFilters) => {
-
     const filteredCars = data.filter((car) => {
       return Object.entries(expandedFilters).every(([category, values]) => {
-        if ((Array.isArray(values) && values.length === 0)) {
+        if (Array.isArray(values) && values.length === 0) {
           return true; // No filter applied for this category
         }
 
@@ -241,7 +235,7 @@ export default function NewCars() {
         if (typeof values === "object" && values.min !== undefined && values.max !== undefined) {
           return carValue >= values.min && carValue <= values.max;
         }
-        
+
         if (Array.isArray(values)) {
           return values.includes(carValue);
         }
@@ -253,9 +247,7 @@ export default function NewCars() {
 
     setCars(filteredCars); // Update the cars state with filtered cars
     setFiltered(true); // Set the filtered state to true
-    // console.log("Filtered Cars:", filteredCars); // Log the filtered cars
     setTotalCars(filteredCars.length); // Update total cars count
-    
   };
 
   const handleCloseGallery = () => {
@@ -266,7 +258,7 @@ export default function NewCars() {
     setFiltered(false); // Reset filtered state
     setActiveFilter(null); // Reset active filter
     setExpandedCategory([]); // Reset expanded categories
-  }
+  };
 
   const resetFilterPopup = (filter = null) => {
     if (filter) {
@@ -275,30 +267,25 @@ export default function NewCars() {
       setActiveFilter(null); // Reset active filter
     }
     setExpandedCategory([]); // Reset expanded categories
-  }
+  };
 
   return (
     <Layout>
       {/* Main Content */}
       {!showGallery ? (
         <>
-          {/* Hero Section */}
           <HeroSection
             title="New Cars"
             subtitle="Meet your perfect car"
             onSearch={handleSearch}
             bgColor="bg-green-500"
           />
-
-          {/* Latest Deals Section */}
           <SectionDeal_new
             data={latestDeals}
             title="Latest Deals"
             description="Discover our handpicked deals on the latest cars with flexible contracts and affordable prices."
           />
-
-          {/* 2x2 Section */}
-          <SectionGrid 
+          <SectionGrid
             titleA={"Find the best new cars"}
             descriptionA={"Explore a wide range of new cars tailored to your needs and budget."}
             buttonTextA={"Explore Now"}
@@ -310,19 +297,17 @@ export default function NewCars() {
           />
         </>
       ) : (
-        // If showGallery is true, display the Gallery
         <>
-          {/* Close Button */}
           <button
             className="absolute right-4 bg-red-500 hover:bg-red-600 text-white w-8 h-8 rounded flex items-center justify-center shadow-lg transition-all cursor-pointer z-20"
             onClick={handleCloseGallery} // Close the gallery
           >
             ✕
           </button>
-          <FilterBar 
-            categories={filterCategories} 
-            activeFilter={activeFilter} 
-            setActiveFilter={setActiveFilter} 
+          <FilterBar
+            categories={filterCategories}
+            activeFilter={activeFilter}
+            setActiveFilter={setActiveFilter}
           />
           <Gallery
             ComponentCard={CarCard_new}

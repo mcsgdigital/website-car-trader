@@ -1,7 +1,6 @@
 "use client";
 import { useState, useEffect, useCallback } from "react";
 
-import { basePath } from "../../../next.config";
 import HeroSection from "../../components/HeroSection";
 import FilterBar from "../../components/FilterBar";
 import Gallery from "../../components/Gallery";
@@ -10,6 +9,9 @@ import CarCard_used from "../../components/CarCard_used";
 import Layout from "../../components/Layout";
 import CarCard_lightbox_used from "../../components/CarCard_lightbox_used";
 import SectionDeal_used from "../../components/SectionDeal_used";
+
+// Hardcoded basePath
+const basePath = "/website-car-trader";
 
 export default function UsedCars() {
   const [data, setData] = useState([]); // State to store all car data
