@@ -7,6 +7,8 @@ import { useState, useEffect } from "react";
 import styles from "./Navbar.module.css";
 
 export default function Navbar() {
+  const basePath = "/website-car-trader";
+
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSignInOpen, setIsSignInOpen] = useState(false); // State to toggle the Sign In panel
@@ -20,13 +22,13 @@ export default function Navbar() {
 
   useEffect(() => {
     // Set the mounted state to true after the component has mounted
-    setIsMounted(true);
+    // setIsMounted(true);
 
     // Check if the user is signed in when the component mounts
     const storedSignedIn = localStorage.getItem("staySignedIn");
     if (storedSignedIn === "true") {
-      setIsSignedIn(true);
-      setStaySignedIn(true);
+      // setIsSignedIn(true);
+      // setStaySignedIn(true);
     }
   }, []);
 
@@ -119,7 +121,7 @@ export default function Navbar() {
         {/* Logo */}
         <div className="flex items-center">
           <Image
-            src="/logo.png"
+            src={`${basePath}/logo.png`}
             alt="CarTrader Logo"
             width={240}
             height={50}
