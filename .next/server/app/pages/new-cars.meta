@@ -1,0 +1,16 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/pages/layout,_N_T_/pages/new-cars/layout,_N_T_/pages/new-cars/page,_N_T_/pages/new-cars"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/pages/new-cars/__PAGE__",
+    "/pages/new-cars",
+    "/pages",
+    "/_index",
+    "/_head"
+  ]
+}

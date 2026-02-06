@@ -1,0 +1,3 @@
+:HL["/website-car-trader/_next/static/chunks/7da95e4dba989440.css","style"]
+:HL["https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css","style"]
+0:{"buildId":"xvJqHhfsBxqOKiXiDIgyU","tree":{"name":"","paramType":null,"paramKey":"","hasRuntimePrefetch":false,"slots":{"children":{"name":"pages","paramType":null,"paramKey":"pages","hasRuntimePrefetch":false,"slots":{"children":{"name":"sell-car","paramType":null,"paramKey":"sell-car","hasRuntimePrefetch":false,"slots":{"children":{"name":"__PAGE__","paramType":null,"paramKey":"__PAGE__","hasRuntimePrefetch":false,"slots":null,"isRootLayout":false}},"isRootLayout":false}},"isRootLayout":false}},"isRootLayout":true},"staleTime":300}
