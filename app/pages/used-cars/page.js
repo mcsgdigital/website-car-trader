@@ -67,7 +67,7 @@ export default function UsedCars() {
         `https://api.unsplash.com/search/photos?query=cars&per_page=10&page=1`,
         {
           headers: {
-            Authorization: `Client-ID ${process.env.NEXT_PUBLIC_UNSPLASH_KEY}`,
+            Authorization: `Client-ID ${process.env.UNSPLASH_ACCESS_KEY}`,
           },
         }
       );
@@ -98,7 +98,7 @@ export default function UsedCars() {
         `https://api.unsplash.com/search/photos?query=cars&per_page=10&page=${page}`,
         {
           headers: {
-            Authorization: `Client-ID ${process.env.NEXT_PUBLIC_UNSPLASH_KEY}`,
+            Authorization: `Client-ID ${process.env.UNSPLASH_ACCESS_KEY}`,
           },
         }
       );
@@ -205,7 +205,7 @@ export default function UsedCars() {
         `https://api.unsplash.com/search/photos?query=cars&per_page=4&page=2`,
         {
           headers: {
-            Authorization: `Client-ID ${process.env.NEXT_PUBLIC_UNSPLASH_KEY}`, // Use your Unsplash API key
+            Authorization: `Client-ID ${process.env.UNSPLASH_ACCESS_KEY}`, // Use your Unsplash API key
           },
         }
       );
@@ -256,7 +256,7 @@ export default function UsedCars() {
         `https://api.unsplash.com/search/photos?query=cars&per_page=10&page=${page}`,
         {
           headers: {
-            Authorization: `Client-ID ${process.env.NEXT_PUBLIC_UNSPLASH_KEY}`,
+            Authorization: `Client-ID ${process.env.UNSPLASH_ACCESS_KEY}`,
           },
         }
       );

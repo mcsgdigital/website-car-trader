@@ -65,12 +65,7 @@ export default function NewCars() {
     try {
       setIsLoading(true); // Set loading state
       const unsplashResponse = await fetch(
-        `https://api.unsplash.com/search/photos?query=cars&per_page=10&page=${page}`,
-        {
-          headers: {
-            Authorization: `Client-ID ${process.env.NEXT_PUBLIC_UNSPLASH_KEY}`,
-          },
-        }
+        `/.netlify/functions/unsplash?q=cars&per_page=10&page=${page}` // Call the Netlify function
       );
       const unsplashData = await unsplashResponse.json();
 
@@ -95,7 +90,7 @@ export default function NewCars() {
         setCars((prevCars) => [...prevCars, ...newCars]); // Append new cars
       }
     } catch (error) {
-      console.error("Error fetching from Unsplash:", error);
+      console.error("Error fetching from Netlify function:", error);
     } finally {
       setIsLoading(false); // Reset loading state
     }
@@ -174,12 +169,7 @@ export default function NewCars() {
   const fetchLatestDealsImages = async () => {
     try {
       const response = await fetch(
-        `https://api.unsplash.com/search/photos?query=cars&per_page=4&page=1`,
-        {
-          headers: {
-            Authorization: `Client-ID ${process.env.NEXT_PUBLIC_UNSPLASH_KEY}`, // Use your Unsplash API key
-          },
-        }
+        `/.netlify/functions/unsplash?q=cars&per_page=4&page=1` // Call the Netlify function
       );
       const data = await response.json();
 
