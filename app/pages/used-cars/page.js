@@ -241,11 +241,6 @@ export default function UsedCars() {
     try {
       const unsplashResponse = await fetch(
         `https://api.unsplash.com/search/photos?query=cars&per_page=10&page=${page}`,
-        {
-          headers: {
-            Authorization: `Client-ID ${process.env.UNSPLASH_ACCESS_KEY}`,
-          },
-        }
       );
       const unsplashData = await unsplashResponse.json();
 
