@@ -242,7 +242,7 @@ export default function UsedCars() {
   const getImages = async (data, page, replace = false) => {
     try {
       const unsplashResponse = await fetch(
-        `https://api.unsplash.com/search/photos?query=cars&per_page=10&page=${page}`,
+        `/.netlify/functions/unsplash?q=cars&per_page=10&page=${page}` // Call the Netlify function
       );
       const unsplashData = await unsplashResponse.json();
 

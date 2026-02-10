@@ -11,7 +11,6 @@ import FilterPopup from "../../components/FilterPopup";
 import SectionDeal_new from "../../components/SectionDeal_new";
 import SectionGrid from "../../components/SectionGrid";
 import CarCard_lightbox_new from "../../components/CarCard_lightbox_new";
-import { log } from "console";
 
 export default function NewCars() {
   const [data, setData] = useState([]); // State to store all car data
