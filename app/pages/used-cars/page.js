@@ -41,7 +41,7 @@ export default function UsedCars() {
   const handleSearch = async (e) => {
     e.preventDefault(); // Prevent form submission
     try {
-      const response = await fetch("mock_used.json"); // Load JSON from public folder
+      const response = await fetch("/mock_used.json"); // Load JSON from public folder
       const result = await response.json();
       
       setData(result); // Store all car data

@@ -8,7 +8,7 @@ export default function HeroSection_home() {
     return (
         <section
             className="relative flex items-center justify-center h-[27vh] bg-cover bg-center bg-no-repeat rounded-lg"
-            style={{ backgroundImage: "url(images/home-hero.jpeg)", backgroundRepeat: "no-repeat" }}
+            style={{ backgroundImage: "url(../images/home-hero.jpeg)", backgroundRepeat: "no-repeat" }}
         >
             {/* Left Content */}
             <div className="absolute left-4 top-1/2 transform -translate-y-1/2 text-white md:left-8">
@@ -26,7 +26,7 @@ export default function HeroSection_home() {
 
             {/* Logo Image */}
             <Image
-                src="images/home-hero-logo.png"
+                src="/images/home-hero-logo.png"
                 alt="Home Hero Logo"
                 className="absolute bottom-2 right-2 md:bottom-4 md:right-4 w-16 md:w-24 h-auto"
                 loading="eager"
