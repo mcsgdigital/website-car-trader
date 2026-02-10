@@ -197,6 +197,8 @@ export default function UsedCars() {
         `/.netlify/functions/unsplash?q=cars&per_page=4&page=2` // Call the Netlify function
       );
       const data = await response.json();
+      console.log("[USED]Fetched Unsplash images for Latest Deals:", data);
+      
 
       // Map the fetched images to car details
       const deals = data.results.map((image, index) => ({

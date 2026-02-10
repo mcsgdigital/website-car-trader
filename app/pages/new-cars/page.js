@@ -11,6 +11,7 @@ import FilterPopup from "../../components/FilterPopup";
 import SectionDeal_new from "../../components/SectionDeal_new";
 import SectionGrid from "../../components/SectionGrid";
 import CarCard_lightbox_new from "../../components/CarCard_lightbox_new";
+import { log } from "console";
 
 export default function NewCars() {
   const [data, setData] = useState([]); // State to store all car data
@@ -170,6 +171,8 @@ export default function NewCars() {
         `/.netlify/functions/unsplash?q=cars&per_page=4&page=1`
       );
       const data = await response.json();
+      console.log("[NEW]Fetched Unsplash images for Latest Deals:", data.results);
+      
 
       // Map the fetched images to car details
       const deals = data.results.map((image, index) => ({
