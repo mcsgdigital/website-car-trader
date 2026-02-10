@@ -167,7 +167,7 @@ export default function NewCars() {
   const fetchLatestDealsImages = async () => {
     try {
       const response = await fetch(
-        `/.netlify/functions/unsplash?q=cars&per_page=4&page=1` // Call the Netlify function
+        `/.netlify/functions/unsplash?q=cars&per_page=4&page=1`
       );
       const data = await response.json();
 

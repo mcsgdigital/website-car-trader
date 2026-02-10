@@ -61,12 +61,7 @@ export default function UsedCars() {
     
     try {
       const unsplashResponse = await fetch(
-        `https://api.unsplash.com/search/photos?query=cars&per_page=10&page=1`,
-        {
-          headers: {
-            Authorization: `Client-ID ${process.env.UNSPLASH_ACCESS_KEY}`,
-          },
-        }
+        `/.netlify/functions/unsplash?q=cars&per_page=10&page=${page}` // Call the Netlify function
       );
       const unsplashData = await unsplashResponse.json();
   
@@ -199,12 +194,7 @@ export default function UsedCars() {
   const fetchLatestDealsImages = async () => {
     try {
       const response = await fetch(
-        `https://api.unsplash.com/search/photos?query=cars&per_page=4&page=2`,
-        {
-          headers: {
-            Authorization: `Client-ID ${process.env.UNSPLASH_ACCESS_KEY}`, // Use your Unsplash API key
-          },
-        }
+        `/.netlify/functions/unsplash?q=cars&per_page=4&page=2` // Call the Netlify function
       );
       const data = await response.json();
 
