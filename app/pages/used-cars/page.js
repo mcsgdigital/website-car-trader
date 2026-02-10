@@ -10,9 +10,6 @@ import Layout from "../../components/Layout";
 import CarCard_lightbox_used from "../../components/CarCard_lightbox_used";
 import SectionDeal_used from "../../components/SectionDeal_used";
 
-// Hardcoded basePath
-const basePath = "/website-car-trader";
-
 export default function UsedCars() {
   const [data, setData] = useState([]); // State to store all car data
   const [cars, setCars] = useState([]); // State to store filtered or loaded cars
@@ -44,7 +41,7 @@ export default function UsedCars() {
   const handleSearch = async (e) => {
     e.preventDefault(); // Prevent form submission
     try {
-      const response = await fetch(`${basePath}/mock_used.json`); // Load JSON from public folder
+      const response = await fetch("mock_used.json"); // Load JSON from public folder
       const result = await response.json();
       
       setData(result); // Store all car data
@@ -141,7 +138,7 @@ export default function UsedCars() {
     if (page > 1 && !filtered) {
       const fetchNextBatch = async () => {
         try {
-          const response = await fetch(`${basePath}/mock_used.json`); // Load JSON from public folder
+          const response = await fetch("mock_used.json"); // Load JSON from public folder
           const data = await response.json();
 
           const cardsToDisplay = calculateCardsToDisplay(); // Calculate the number of cards to display

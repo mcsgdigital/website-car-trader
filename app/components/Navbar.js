@@ -7,7 +7,6 @@ import { useState, useEffect } from "react";
 import styles from "./Navbar.module.css";
 
 export default function Navbar() {
-  const basePath = "/website-car-trader";
 
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -121,7 +120,7 @@ export default function Navbar() {
         {/* Logo */}
         <div className="flex items-center">
           <Image
-            src={`${basePath}/logo.png`}
+            src="logo.png"
             alt="CarTrader Logo"
             width={240}
             height={50}

@@ -12,8 +12,6 @@ import SectionDeal_new from "../../components/SectionDeal_new";
 import SectionGrid from "../../components/SectionGrid";
 import CarCard_lightbox_new from "../../components/CarCard_lightbox_new";
 
-const basePath = "/website-car-trader"; // Hardcoded basePath
-
 export default function NewCars() {
   const [data, setData] = useState([]); // State to store all car data
   const [cars, setCars] = useState([]); // State to store loaded cars
@@ -45,7 +43,7 @@ export default function NewCars() {
   const handleSearch = async (e) => {
     e.preventDefault(); // Prevent form submission
     try {
-      const response = await fetch(`${basePath}/mock_new.json`); // Load JSON from public folder
+      const response = await fetch("mock_new.json"); // Load JSON from public folder
       const result = await response.json();
 
       setData(result); // Store all car data
@@ -279,11 +277,11 @@ export default function NewCars() {
             titleA={"Find the best new cars"}
             descriptionA={"Explore a wide range of new cars tailored to your needs and budget."}
             buttonTextA={"Explore Now"}
-            imageSrcA={`${basePath}/images/newcars-driving-down.jpg`}
+            imageSrcA="../images/newcars-driving-down.jpg"
             titleB={"Buy with confidence"}
             descriptionB={"Enjoy peace of mind with trusted dealers and secure transactions."}
             buttonTextB={"Learn More"}
-            imageSrcB={`${basePath}/images/newcars-keys.jpg`}
+            imageSrcB="../images/newcars-keys.jpg"
           />
         </>
       ) : (

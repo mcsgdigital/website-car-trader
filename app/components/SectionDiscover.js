@@ -1,5 +1,4 @@
 import Image from "next/image";
-const basePath = "/website-car-trader"; // Hardcoded basePath
 
 export default function SectionDiscover() {
 
@@ -13,7 +12,7 @@ export default function SectionDiscover() {
                 <div className="md:col-span-6 bg-white shadow-lg rounded-lg overflow-hidden">
                     <div className="relative w-full h-48">
                         <Image
-                            src={`${basePath}/images/service-1.jpg`}
+                            src="images/service-1.jpg"
                             alt="Service 1"
                             className="object-cover"
                             loading="eager"
@@ -39,7 +38,7 @@ export default function SectionDiscover() {
                 <div className="md:col-span-3 bg-white shadow-lg rounded-lg overflow-hidden">
                     <div className="relative w-full h-48">
                         <Image
-                            src={`${basePath}/images/service-2.jpg`}
+                            src="images/service-2.jpg"
                             alt="Service 2"
                             className="object-cover"
                             loading="eager"
@@ -65,7 +64,7 @@ export default function SectionDiscover() {
                 <div className="md:col-span-3 bg-white shadow-lg rounded-lg overflow-hidden">
                     <div className="relative w-full h-48">
                         <Image
-                            src={`${basePath}/images/service-3.jpg`}
+                            src="images/service-3.jpg"
                             alt="Service 3"
                             className="object-cover"
                             loading="eager"
