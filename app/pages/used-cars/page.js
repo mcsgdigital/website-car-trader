@@ -133,7 +133,7 @@ export default function UsedCars() {
     if (page > 1 && !filtered) {
       const fetchNextBatch = async () => {
         try {
-          const response = await fetch("mock_used.json"); // Load JSON from public folder
+          const response = await fetch("/mock_used.json"); // Load JSON from public folder
           const data = await response.json();
 
           const cardsToDisplay = calculateCardsToDisplay(); // Calculate the number of cards to display
