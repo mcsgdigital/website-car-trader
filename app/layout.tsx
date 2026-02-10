@@ -22,7 +22,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             <body>
                 <Navbar />
                 {/* Add padding to the top of the main content to account for the navbar height */}
-                <main className="min-h-screen p-6 pt-30 lg:pt-30">
+                <main className="min-h-screen p-6 pt-30 mt-20 lg:pt-30">
                     {children}
                 </main>
                 <footer className="bg-gray-800 text-white py-8">
