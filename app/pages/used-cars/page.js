@@ -121,37 +121,36 @@ export default function UsedCars() {
 
   // Function to load more cars when scrolling
   const loadMoreCars = useCallback(() => {
-    
-    if (!isLoading && hasMore && !filtered) {
-      setPage((prevPage) => prevPage + 1); // Increment the page number
-    }
+    // Early exit if already loading, no more cars, or filters are applied
+    if (isLoading || !hasMore || filtered) return;
+  
+    setPage((prevPage) => prevPage + 1); // Increment the page number
   }, [isLoading, hasMore, filtered]);
 
   // Use Effect to fetch more cars when the page changes
   useEffect(() => {
-
     if (page > 1 && !filtered) {
       const fetchNextBatch = async () => {
         try {
           const response = await fetch("/mock_used.json"); // Load JSON from public folder
           const data = await response.json();
-
+  
           const cardsToDisplay = calculateCardsToDisplay(); // Calculate the number of cards to display
           const startIndex = (page - 1) * cardsToDisplay;
           const endIndex = page * cardsToDisplay;
           const nextBatch = data.slice(startIndex, endIndex); // Get the next batch of cars
-
+  
           if (nextBatch.length === 0) {
             setHasMore(false); // No more cars to load
             return;
           }
-
+  
           replaceImages(nextBatch, page); // Fetch images for the next batch of cars
         } catch (error) {
           console.error("Error fetching cars for page:", page, error);
         }
       };
-
+  
       fetchNextBatch();
     }
   }, [page, filtered]);
@@ -197,8 +196,6 @@ export default function UsedCars() {
         `/.netlify/functions/unsplash?q=cars&per_page=4&page=2` // Call the Netlify function
       );
       const data = await response.json();
-      console.log("[USED]Fetched Unsplash images for Latest Deals:", data);
-      
 
       // Map the fetched images to car details
       const deals = data.results.map((image, index) => ({
@@ -293,7 +290,6 @@ export default function UsedCars() {
       });
     });
 
-    // console.log("Filtered Cars (before adding images):", filteredCars);
     setTotalCars(filteredCars.length); // Update total cars count
 
     // Add images to the filtered cars and replace the cars state
