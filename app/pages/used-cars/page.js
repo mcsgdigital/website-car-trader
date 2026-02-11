@@ -87,12 +87,7 @@ export default function UsedCars() {
     try {
       setIsLoading(true); // Set loading state
       const unsplashResponse = await fetch(
-        `https://api.unsplash.com/search/photos?query=cars&per_page=10&page=${page}`,
-        {
-          headers: {
-            Authorization: `Client-ID ${process.env.UNSPLASH_ACCESS_KEY}`,
-          },
-        }
+        `/.netlify/functions/unsplash?q=cars&per_page=10&page=${page}`
       );
       const unsplashData = await unsplashResponse.json();
 
@@ -157,7 +152,7 @@ export default function UsedCars() {
 
   // Use IntersectionObserver to detect when the user scrolls to the bottom
   useEffect(() => {
-    if (!showGallery) return; // Only initialize the observer when the gallery is open
+    if (!showGallery || !hasMore) return; // Only initialize the observer when the gallery is open
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -181,7 +176,7 @@ export default function UsedCars() {
         observer.unobserve(sentinel);
       }
     };
-  }, [showGallery, loadMoreCars]);
+  }, [showGallery, hasMore, loadMoreCars]);
 
   useEffect(() => {
     if (activeFilter) {
