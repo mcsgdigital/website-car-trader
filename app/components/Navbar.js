@@ -20,8 +20,25 @@ export default function Navbar() {
   const [isMounted, setIsMounted] = useState(false); // Tracks if the component has mounted
 
   useEffect(() => {
-    // Set the mounted state to true after the component has mounted
-    // setIsMounted(true);
+    // Check if the screen width is for desktop mode
+    const handleResize = () => {
+      if (window.innerWidth >= 1024) {
+        setIsMounted(true); // Set isMounted to true for desktop mode
+      } else {
+        setIsMounted(false); // Set isMounted to false for mobile mode
+      }
+    };
+
+    // Run the check on component mount
+    handleResize();
+
+    // Add a resize event listener to handle screen size changes
+    window.addEventListener("resize", handleResize);
+
+    // Cleanup the event listener on component unmount
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
 
     // Check if the user is signed in when the component mounts
     const storedSignedIn = localStorage.getItem("staySignedIn");
