@@ -13,18 +13,18 @@ export default function FilterType_range({ rangeName, onChange }) {
   };
 
   return (
-    <div className="flex items-center gap-4">
+    <div className="flex items-center gap-4 text-gray-200 dark:text-black">
       <input
         type="number"
         placeholder="Min"
-        className="w-1/2 p-2 border border-gray-300 rounded"
+        className="w-1/2 p-2 border border-gray-300 rounded text-gray-200 dark:text-black"
         value={range.min} // Controlled input for min
         onChange={(e) => handleChange(e, "min")} // Update min value
       />
       <input
         type="number"
         placeholder="Max"
-        className="w-1/2 p-2 border border-gray-300 rounded"
+        className="w-1/2 p-2 border border-gray-300 rounded text-gray-200 dark:text-black"
         value={range.max} // Controlled input for max
         onChange={(e) => handleChange(e, "max")} // Update max value
       />

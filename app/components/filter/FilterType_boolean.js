@@ -6,7 +6,7 @@ export default function FilterType_boolean({ valueA, valueB, boolName, onChange 
 
   return (
     <select
-      className="w-full p-2 border border-gray-300 rounded"
+      className="w-full p-2 border border-gray-300 rounded text-gray-200 dark:text-black"
       onChange={handleChange} // Trigger handleChange on selection
     >
       <option value="">Select {boolName}</option>
