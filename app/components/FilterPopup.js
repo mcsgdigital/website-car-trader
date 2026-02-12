@@ -142,7 +142,7 @@ export default function FilterPopup({
         </button>
 
         {/* Filter Title */}
-        <h2 className="text-2xl font-bold mb-4">Filter / Sort</h2>
+        <h2 className="text-2xl font-bold mb-4 text-gray-200 dark:text-black">Filter / Sort</h2>
 
         {/* Collapsible Categories */}
         <div className="space-y-6">
@@ -167,8 +167,8 @@ export default function FilterPopup({
                   )
                 }
               >
-                <label className="block text-lg font-medium">{category}</label>
-                <span className="text-gray-200">
+                <label className="block text-lg font-medium text-gray-200 dark:text-black">{category}</label>
+                <span className="text-gray-200 dark:text-black">
                   {expandedCategory.includes(category) ? "▲" : "▼"}
                 </span>
               </div>
